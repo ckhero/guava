@@ -1,0 +1,36 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ckhero
+ * Date: 2019/2/17
+ * Time: 11:46 PM
+ */
+
+namespace api\modules\v1\controllers;
+
+
+use common\components\ApiController;
+use common\components\Format;
+use common\models\User;
+use common\services\ExaminationService;
+
+class ExaminationController extends ApiController
+{
+    public function actionSubmit()
+    {
+
+    }
+
+    /**
+     * @return array
+     * @throws \common\exceptions\DefaultException
+     */
+    public function actionResult()
+    {
+        $lessonId = $this->getParam('id');
+        $user = (new User())->checkLogin();
+
+        $res = (new ExaminationService())->result($user, $lessonId);
+        return Format::success($res);
+    }
+}
