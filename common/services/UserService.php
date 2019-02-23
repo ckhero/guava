@@ -43,7 +43,7 @@ class UserService
                 func_get_args(),
                 'message' => $e->getMessage()
             ], LogTypeConst::TYPE_LOGIN);
-            throw new DefaultException(ErrorConst::ERROR_LOGIN_FAIL, $e->getMessage());
+            throw new DefaultException(ErrorConst::ERROR_LOGIN_FAIL);
         }
 
 //        return [
