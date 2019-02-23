@@ -9,16 +9,12 @@
 namespace common\services;
 
 
-use api\events\LoginEvent;
 use common\components\Log;
 use common\consts\ErrorConst;
-use common\consts\EventConst;
 use common\consts\LogTypeConst;
 use common\consts\SystemConst;
 use common\exceptions\DefaultException;
-use common\models\PointLog;
 use common\models\User;
-use common\models\UserToken;
 use EasyWeChat\Factory;
 use Yii;
 
@@ -47,7 +43,7 @@ class UserService
                 func_get_args(),
                 'message' => $e->getMessage()
             ], LogTypeConst::TYPE_LOGIN);
-            throw new DefaultException(ErrorConst::ERROR_LOGIN_FAIL);
+            throw new DefaultException(ErrorConst::ERROR_LOGIN_FAIL, $e->getMessage());
         }
 
 //        return [
