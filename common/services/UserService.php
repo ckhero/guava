@@ -40,6 +40,7 @@ class UserService
 //
 //            Yii::$app->trigger(EventConst::EVENT_LOGIN, (new LoginEvent($user)));
         } catch (\Exception $e) {
+            return $e->getMessage();
             Log::error(ErrorConst::msg(ErrorConst::ERROR_LOGIN_FAIL), [
                 func_get_args(),
                 'message' => $e->getMessage()
