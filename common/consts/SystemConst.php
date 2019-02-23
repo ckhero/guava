@@ -15,4 +15,6 @@ class SystemConst
      * 头部
      */
     const TOKEN = 'x-token';
+
+    const PARAMS_CONFIG_MINI_PROGRAM = 'mini-program';
 }

@@ -25,9 +25,11 @@ class UserController extends ApiController
      */
     public function actionLogin()
     {
-        $openid = $this->getParam('openid');
+        $code = $this->getParam('code');
+        $iv = $this->getParam('iv');
+        $encryptData = $this->getParam('encrypt_data');
 
-        $res = (new UserService())->login($openid);
+        $res = (new UserService())->login($code, $iv, $encryptData);
 
         return Format::success($res);
     }
