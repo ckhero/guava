@@ -32,8 +32,9 @@ class UserService
     {
         try {
             $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
-            $sessionInfo = $app->auth->session($code);
-            return $sessionInfo;
+            list($sessionKey, $openid) = $app->auth->session($code);
+            $baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
+            return $baseInfo;
 //            $user = (new User())->findOrCreate($openid);
 //            $userToken = (new UserToken())->createOrderUpdate($user->user_id);
 //
