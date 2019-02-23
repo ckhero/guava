@@ -10,7 +10,7 @@ return [
 
         'log' => [
             'level' => 'debug',
-            'file' => 'file' => __DIR__.'/../../api/runtime/log/wechat.log',
+            'file' =>  __DIR__.'/../../api/runtime/log/wechat.log',
         ],
     ]
 ];
