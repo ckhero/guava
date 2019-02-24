@@ -14,5 +14,6 @@ class LogTypeConst
     const TYPE_LOGIN = 'login'; // 登陆
     const TYPE_SIGN = 'sign'; // 登陆
     const TYPE_POINT = 'point'; // 积分
+    const TYPE_USER_LESSON = 'user_lesson'; // 积分
     const TYPE_SAHRE = 'share'; // 积分
 }

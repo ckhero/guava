@@ -25,12 +25,13 @@ class ExaminationController extends ApiController
      * @return array
      * @throws \common\exceptions\DefaultException
      */
-    public function actionResult()
+    public function actionSave()
     {
-        $lessonId = $this->getParam('id');
+        $lessonId = $this->getParam('id', 0);
+        $options = $this->getParam('options', []);
         $user = (new User())->checkLogin();
 
-        $res = (new ExaminationService())->result($user, $lessonId);
+        $res = (new ExaminationService())->save($user, $lessonId, $options);
         return Format::success($res);
     }
 }

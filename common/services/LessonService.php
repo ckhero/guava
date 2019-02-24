@@ -43,7 +43,7 @@ class LessonService
     {
         $lesson = (new Lesson())->findByLessonId($lessonId);
 
-        if ($this->isPaid($user, $lesson)) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_PAID);
+        $this->checkPaid($user, $lesson);
 
         if (!$lesson) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_EXISTS);
 
@@ -101,5 +101,15 @@ class LessonService
     {
         if (!$lesson->isNeedPay()) return true;
         return (bool) (new Order())->findFinishOne($user->user_id);
+    }
+
+    /**
+     * @param User $user
+     * @param Lesson $lesson
+     * @throws DefaultException
+     */
+    public function checkPaid(User $user, Lesson $lesson)
+    {
+        if (!$this->isPaid($user, $lesson)) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_PAID);
     }
 }

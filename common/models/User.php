@@ -193,10 +193,11 @@ class User extends \yii\db\ActiveRecord
      * @return bool
      * @throws DefaultException
      */
-    public function updatePoint(int $point): bool
+    public function updatePoint(int $point, string $desc = ''): bool
     {
         $this->user_point += $point;
         if (!$this->save()) throw new DefaultException(ErrorConst::ERROR_USER_POINT_UPDATE_FAIL);
+        (new PointLog())->create($this->user_id, $point, $desc);
         return true;
     }
 

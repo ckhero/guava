@@ -14,6 +14,7 @@ class UserLessonConst
     const STATUS_INIT = 'init'; //未完成
     const STATUS_FINISH = 'finish'; //完成
     const STATUS_FINISH_DELAY = 'finish_delay'; //非当天完成
+    const STATUS_FAIL = 'fail'; //非当天完成
     const STATUS_LOCK = 'lock';
 
     const SHARE_STATUS_INIT = 'init'; //未分享
@@ -24,6 +25,7 @@ class UserLessonConst
     public static $mapFinish = [
         self::STATUS_FINISH,
         self::STATUS_FINISH_DELAY,
+        self::STATUS_FAIL,
     ];
 
     /**
@@ -34,5 +36,6 @@ class UserLessonConst
         self::STATUS_FINISH => '已完成',
         self::STATUS_FINISH_DELAY => '已完成',
         self::STATUS_INIT => '未完成',
+        self::STATUS_FAIL => '已完成',
     ];
 }

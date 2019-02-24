@@ -2,6 +2,9 @@
 
 namespace common\models;
 
+use common\consts\ErrorConst;
+use common\consts\LessonQuestionItemConst;
+use common\exceptions\DefaultException;
 use Yii;
 
 /**
@@ -16,6 +19,9 @@ use Yii;
  * @property string $lesson_question_update_at 题目更新时间
  *
  * @property LessonQuestionItem[] $lessonQuestionItems 题目更新时间
+ * @property LessonQuestionItem $lessonQuestionRightItem 对的选项
+ * @property string $rightOption 对的选项
+ * @property int $score 题目个数
  */
 class LessonQuestion extends \yii\db\ActiveRecord
 {
@@ -62,5 +68,53 @@ class LessonQuestion extends \yii\db\ActiveRecord
     public function getLessonQuestionItems()
     {
         return $this->hasMany(LessonQuestionItem::className(), ['lesson_question_lesson_question_id' => 'lesson_question_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLessonQuestionRightItem()
+    {
+        return $this->hasOne(LessonQuestionItem::className(), ['lesson_question_lesson_question_id' => 'lesson_question_id'])
+            ->where([
+                'lesson_question_item_right' => LessonQuestionItemConst::STATUS_RIGHT_YES
+            ]);
+    }
+
+    /**
+     * @param int $questionId
+     * @return LessonQuestion|null
+     * @throws DefaultException
+     */
+    public function findByQuestionId(int $questionId)
+    {
+        $model = self::findOne($questionId);
+        if (!$model) throw new DefaultException(ErrorConst::ERROR_LESSON_QUESTION_ILLEGAL);
+        return $model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRightOption(): string
+    {
+        return $this->lessonQuestionRightItem->lesson_question_item_option;
+    }
+
+    /**
+     * @param string $option
+     * @return bool
+     */
+    public function checkOption(string $option): bool
+    {
+        return strcasecmp($this->rightOption, $option) === 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScore(): int
+    {
+        return 20;
     }
 }

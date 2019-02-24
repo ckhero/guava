@@ -151,4 +151,36 @@ class UserLesson extends \yii\db\ActiveRecord
     {
         return $this->user_lesson_share_status === UserLessonConst::SHARE_STATUS_SUCC;
     }
+
+    /**
+     * @param int $userId
+     * @param int $score
+     * @param int $percent
+     * @param int $lessonId
+     * @param array $options
+     * @param string $status
+     * @return array|UserLesson|null|\yii\db\ActiveRecord
+     * @throws DefaultException
+     */
+    public function create(int $userId, int $score, int $percent, int $lessonId, array $options = [], $status = UserLessonConst::STATUS_INIT)
+    {
+        $model = (new self())->findByLessonId($userId, $lessonId);
+        if (!$model) $model = new self();
+        $model->user_lesson_user_id = $userId;
+        $model->user_lesson_score = $score;
+        $model->user_lesson_right_percent = $percent;
+        $model->user_lesson_lesson_id = $lessonId;
+        $model->user_lesson_options = json_encode($options);
+        $model->user_lesson_status = $status;
+
+        if (!$model->save()) {
+            Log::warning(ErrorConst::msg(ErrorConst::ERROR_USER_LESSON_SAVE_FAIL), [
+                func_get_args(),
+                'message' => $model->getFirstErrors()
+            ], LogTypeConst::TYPE_USER_LESSON);
+            throw new DefaultException(ErrorConst::ERROR_USER_LESSON_SAVE_FAIL);
+        }
+
+        return $model;
+    }
 }

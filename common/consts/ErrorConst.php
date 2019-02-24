@@ -34,6 +34,9 @@ class ErrorConst
     const ERROR_LESSON_NOT_DONE = 102004;
     const ERROR_LESSON_NOT_PAID = 102005;
     const ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL = 102006;
+    const ERROR_LESSON_QUESTION_ILLEGAL= 102007;
+    const ERROR_LESSON_UNKOWN_TYPE= 102008;
+    const ERROR_USER_LESSON_SAVE_FAIL= 102009;
 
     //分享
     const ERROR_SHARE_SAVE_FAIL = 103005;
@@ -63,6 +66,9 @@ class ErrorConst
         self::ERROR_LESSON_NOT_DONE => '课程尚未完成',
         self::ERROR_LESSON_NOT_PAID => '尚未购买课程',
         self::ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL => '用户课程分享状态更新失败',
+        self::ERROR_LESSON_QUESTION_ILLEGAL => '无效的题目',
+        self::ERROR_LESSON_UNKOWN_TYPE => '未知的课程类型',
+        self::ERROR_USER_LESSON_SAVE_FAIL => '用户学习记录保存失败',
 
         //分享
         self::ERROR_SHARE_SAVE_FAIL => '分享保存失败',

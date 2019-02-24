@@ -19,8 +19,10 @@ use Yii;
  *
  * @property string $lessonTypeText 课程类型
  * @property int $lessonTypeSort 课程排序
+ * @property int $point 积分
  * @property LessonData $lessonData 课程学习资料
  * @property LessonQuestion[] $lessonQuestions 课程题目
+ * @property int $questionNum 题目个数
  */
 class Lesson extends \yii\db\ActiveRecord
 {
@@ -80,7 +82,7 @@ class Lesson extends \yii\db\ActiveRecord
 
     /**
      * @param int $lessonId
-     * @return array|null|\yii\db\ActiveRecord
+     * @return array|null|\yii\db\ActiveRecord|self
      * @throws DefaultException
      */
     public function findByLessonId(int $lessonId)
@@ -123,5 +125,36 @@ class Lesson extends \yii\db\ActiveRecord
     public function isNeedPay()
     {
         return $this->lesson_sort > 3;
+    }
+
+    /**
+     * @return mixed
+     * @throws DefaultException
+     */
+    public function getPoint()
+    {
+        switch ($this->lesson_type) {
+            case LessonConst::TYPE_LOGIC:
+            case LessonConst::TYPE_ENGLISH:
+                $point = 2;
+                break;
+
+            case LessonConst::TYPE_MATH:
+                $point = 3;
+                break;
+
+            default:
+                throw new DefaultException(ErrorConst::ERROR_LESSIN_UNKOWN_TYPE);
+                break;
+        }
+        return $point;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuestionNum()
+    {
+        return count($this->lessonQuestions);
     }
 }
