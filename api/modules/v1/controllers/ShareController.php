@@ -22,7 +22,7 @@ class ShareController extends ApiController
      */
     public function actionSave()
     {
-        $lessonId = $this->getParam('id');
+        $lessonId = $this->getParam('id', 0);
         $status = $this->getParam('status');
         $user = (new User())->checkLogin();
 
