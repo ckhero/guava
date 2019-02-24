@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\components\Log;
 use common\consts\ErrorConst;
+use common\consts\LogTypeConst;
 use common\consts\UserLessonConst;
 use common\exceptions\DefaultException;
 use Yii;
@@ -120,6 +122,8 @@ class UserLesson extends \yii\db\ActiveRecord
     /**
      * @param int $userId
      * @param int $lessonId
+     * @param bool $isSucc
+     * @return array|UserLesson|null|\yii\db\ActiveRecord
      * @throws DefaultException
      */
     public function updateShareStatus(int $userId, int $lessonId, bool $isSucc = true)
@@ -130,7 +134,12 @@ class UserLesson extends \yii\db\ActiveRecord
         if ($isSucc && $userLesson->isShare()) return $userLesson;
 
         $userLesson->user_lesson_share_status = UserLessonConst::SHARE_STATUS_SUCC;
-        if (!$userLesson->save()) throw new DefaultException(ErrorConst::ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL, $userLesson->getFirstError());
+        if (!$userLesson->save()) {
+            Log::warning(ErrorConst::msg(ErrorConst::ERROR_USER_NOT_LOGIN), [
+                'message' => $userLesson->getFirstErrors(),
+            ], LogTypeConst::TYPE_SAHRE);
+            throw new DefaultException(ErrorConst::ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL);
+        }
 
         return $userLesson;
     }
