@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\consts\DatumConst;
+use common\queries\DatumQuery;
 use Yii;
 
 /**
@@ -52,5 +54,28 @@ class Datum extends \yii\db\ActiveRecord
             'datum_create_at' => 'Datum Create At',
             'datum_update_at' => 'Datum Update At',
         ];
+    }
+
+    public static function find()
+    {
+        return new DatumQuery(get_called_class());
+    }
+
+    /**
+     * @param int $currPage
+     * @param int $pageSize
+     * @param array $types
+     * @return array|\yii\db\ActiveRecord[]|self[]
+     */
+    public function list(int $currPage, int $pageSize, array $types = [DatumConst::TYPE_DEFAULT])
+    {
+        $list = self::find()
+            ->byTypes($types)
+            ->offset(($currPage - 1) * $pageSize)
+            ->limit($pageSize)
+            ->orderBy('datum_id desc')
+            ->all();
+
+        return $list;
     }
 }
