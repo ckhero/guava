@@ -158,6 +158,7 @@ class UserLesson extends \yii\db\ActiveRecord
     /**
      * @param int $userId
      * @param int $score
+     * @param int $point
      * @param int $percent
      * @param int $lessonId
      * @param array $options
@@ -165,12 +166,13 @@ class UserLesson extends \yii\db\ActiveRecord
      * @return array|UserLesson|null|\yii\db\ActiveRecord
      * @throws DefaultException
      */
-    public function create(int $userId, int $score, int $percent, int $lessonId, array $options = [], $status = UserLessonConst::STATUS_INIT)
+    public function create(int $userId, int $score, int $point, int $percent, int $lessonId, array $options = [], $status = UserLessonConst::STATUS_INIT)
     {
         $model = (new self())->findByLessonId($userId, $lessonId);
         if (!$model) $model = new self();
         $model->user_lesson_user_id = $userId;
         $model->user_lesson_score = $score;
+        $model->user_lesson_point = $point;
         $model->user_lesson_right_percent = $percent;
         $model->user_lesson_lesson_id = $lessonId;
         $model->user_lesson_options = json_encode($options);

@@ -47,7 +47,7 @@ class ExaminationService
                 }
             }
             $rightPercent = intval($rightNum / $lesson->questionNum * 10000);
-            $userLesson = (new UserLesson())->create($user->user_id, $score, $rightPercent, $lessonId, $options, $rightPercent >= 60 ? UserLessonConst::STATUS_FINISH :UserLessonConst::STATUS_FAIL);
+            $userLesson = (new UserLesson())->create($user->user_id, $score, $point, $rightPercent, $lessonId, $options, $rightPercent >= 60 ? UserLessonConst::STATUS_FINISH :UserLessonConst::STATUS_FAIL);
             $user->updatePoint($point, $userLesson->user_lesson_lesson_id);
         }
 
