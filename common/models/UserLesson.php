@@ -125,7 +125,7 @@ class UserLesson extends \yii\db\ActiveRecord
     public function updateShareStatus(int $userId, int $lessonId, bool $isSucc = true)
     {
         $userLesson = (new self())->findByLessonId($userId, $lessonId);
-        if ($userLesson) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_DONE);
+        if (!$userLesson) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_DONE);
 
         if ($isSucc && $userLesson->isShare()) return $userLesson;
 
