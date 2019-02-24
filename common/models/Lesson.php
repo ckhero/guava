@@ -20,7 +20,7 @@ use Yii;
  * @property string $lessonTypeText 课程类型
  * @property int $lessonTypeSort 课程排序
  * @property int $point 积分
- * @property LessonData $lessonData 课程学习资料
+ * @property LessonDatum $lessonDdtum 课程学习资料
  * @property LessonQuestion[] $lessonQuestions 课程题目
  * @property int $questionNum 题目个数
  */
@@ -105,9 +105,9 @@ class Lesson extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLessonData()
+    public function getLessonDatum()
     {
-        return $this->hasOne(LessonData::className(), ['lesson_data_lesson_id' => 'lesson_id']);
+        return $this->hasOne(LessonDatum::className(), ['lesson_datum_lesson_id' => 'lesson_id']);
     }
 
     /**

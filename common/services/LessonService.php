@@ -52,9 +52,9 @@ class LessonService
         if ((new UserLessonService($user))->isFinish($lessonId)) throw new DefaultException(ErrorConst::ERROR_LESSON_ALREADY_DONE);
 
         $lessonData = [
-            'lesson_data_type' => $lesson->lessonData->lesson_data_type,
-            'lesson_data_name' => $lesson->lessonData->lesson_data_name,
-            'lesson_data_detail' => $lesson->lessonData->lesson_data_detail,
+            'datum_type' => $lesson->lessonDdtum->datum->datum_detail_type,
+            'datum_name' => $lesson->lessonDdtum->datum->datum_name,
+            'datum_detail' => $lesson->lessonDdtum->datum->datum_detail,
         ];
 
         $questions = [];
