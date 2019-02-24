@@ -129,7 +129,7 @@ class User extends \yii\db\ActiveRecord
     public function checkLogin()
     {
         $token = \Yii::$app->request->headers->get(SystemConst::TOKEN, '');
-        if ($user = (new UserToken())->findByToken($token)->user) return $user;
+        if ($user = (new UserToken())->findByToken($token)->user ?? '') return $user;
 
         Log::warning(ErrorConst::msg(ErrorConst::ERROR_USER_NOT_LOGIN), [
             'token' => $token,
