@@ -20,9 +20,10 @@ class HomeService
     public function index(User $user): array
     {
         $userLessonService = (new UserLessonService($user));
+        $lessons = $userLessonService->list($user->createDays, 1);
         return [
             'schedule' => $userLessonService->getLearnSchedule(),
-            'today' => $userLessonService->list($user->createDays, 1),
+            'today' => current($lessons),
         ];
     }
 }
