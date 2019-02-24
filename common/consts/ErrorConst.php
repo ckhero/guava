@@ -33,6 +33,10 @@ class ErrorConst
     const ERROR_LESSON_ALREADY_DONE = 102003;
     const ERROR_LESSON_NOT_DONE = 102004;
     const ERROR_LESSON_NOT_PAID = 102005;
+    const ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL = 102006;
+
+    //分享
+    const ERROR_SHARE_SAVE_FAIL = 103005;
 
     public static $msg = [
         self::NO_ERROR => '成功',
@@ -58,6 +62,10 @@ class ErrorConst
         self::ERROR_LESSON_ALREADY_DONE => '课程已经完成',
         self::ERROR_LESSON_NOT_DONE => '课程尚未完成',
         self::ERROR_LESSON_NOT_PAID => '尚未购买课程',
+        self::ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL => '用户课程分享状态更新失败',
+
+        //分享
+        self::ERROR_SHARE_SAVE_FAIL => '分享保存失败',
     ];
 
     /**

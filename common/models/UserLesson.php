@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\consts\ErrorConst;
 use common\consts\UserLessonConst;
+use common\exceptions\DefaultException;
 use Yii;
 
 /**
@@ -100,5 +102,44 @@ class UserLesson extends \yii\db\ActiveRecord
     public function getLesson()
     {
         return $this->hasOne(Lesson::className(), ['lesson_id' => 'user_lesson_lesson_id']);
+    }
+
+    /**
+     * @param int $userId
+     * @param int $lessonId
+     * @return array|null|\yii\db\ActiveRecord|self
+     */
+    public function findByLessonId(int $userId, int $lessonId)
+    {
+        return self::find()->where([
+            'user_lesson_user_id' => $userId,
+            'user_lesson_lesson_id' => $lessonId,
+        ])->one();
+    }
+
+    /**
+     * @param int $userId
+     * @param int $lessonId
+     * @throws DefaultException
+     */
+    public function updateShareStatus(int $userId, int $lessonId, bool $isSucc = true)
+    {
+        $userLesson = (new self())->findByLessonId($userId, $lessonId);
+        if ($userLesson) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_DONE);
+
+        if ($isSucc && $userLesson->isShare()) return $userLesson;
+
+        $userLesson->user_lesson_share_status = UserLessonConst::SHARE_STATUS_SUCC;
+        if ($userLesson->save()) throw new DefaultException(ErrorConst::ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL);
+
+        return $userLesson;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShare():bool
+    {
+        return $this->user_lesson_share_status === UserLessonConst::SHARE_STATUS_SUCC;
     }
 }
