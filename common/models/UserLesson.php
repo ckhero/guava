@@ -130,7 +130,7 @@ class UserLesson extends \yii\db\ActiveRecord
         if ($isSucc && $userLesson->isShare()) return $userLesson;
 
         $userLesson->user_lesson_share_status = UserLessonConst::SHARE_STATUS_SUCC;
-        if (!$userLesson->save()) throw new DefaultException(ErrorConst::ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL);
+        if (!$userLesson->save()) throw new DefaultException(ErrorConst::ERROR_USER_LESSON_SHARE_STATUS_UPDATE_FAIL, $userLesson->getFirstErrors());
 
         return $userLesson;
     }
