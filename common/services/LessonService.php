@@ -12,7 +12,9 @@ namespace common\services;
 use common\consts\ErrorConst;
 use common\exceptions\DefaultException;
 use common\models\Lesson;
+use common\models\Order;
 use common\models\User;
+use phpDocumentor\Reflection\Types\Array_;
 
 class LessonService
 {
@@ -37,9 +39,12 @@ class LessonService
      * @return array
      * @throws DefaultException
      */
-    public function detail(User $user, int $lessonId):array
+    public function detail(User $user, int $lessonId): array
     {
         $lesson = (new Lesson())->findByLessonId($lessonId);
+
+        if ($this->isPaid($user, $lesson)) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_PAID);
+
         if (!$lesson) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_EXISTS);
 
         if (!(new UserLessonService($user))->isUnlock($lessonId)) throw new DefaultException(ErrorConst::ERROR_LESSON_LOCK);
@@ -74,5 +79,27 @@ class LessonService
             'lesson_data' => $lessonData,
             'questions' => $questions,
         ];
+    }
+
+    /**
+     * @param User $user
+     * @param int $lessonId
+     * @return array
+     */
+    public function payStatus(User $user, int $lessonId): array
+    {
+        $lesson = (new Lesson())->findByLessonId($lessonId);
+        return ['status' => $this->isPaid($user, $lesson)];
+    }
+
+    /**
+     * @param User $user
+     * @param Lesson $lesson
+     * @return bool
+     */
+    public function isPaid(User $user, Lesson $lesson):bool
+    {
+        if (!$lesson->isNeedPay()) return true;
+        return (bool) (new Order())->findFinishOne($user->user_id);
     }
 }

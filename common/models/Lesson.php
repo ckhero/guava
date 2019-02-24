@@ -110,4 +110,13 @@ class Lesson extends \yii\db\ActiveRecord
     {
         return $this->hasMany(LessonQuestion::className(), ['lesson_question_lesson_id' => 'lesson_id']);
     }
+
+    /**
+     * @return bool
+     * 是否需要支付
+     */
+    public function isNeedPay()
+    {
+        return $this->lesson_id > 3;
+    }
 }

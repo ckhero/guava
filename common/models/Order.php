@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\queries\OrderQuery;
 use Yii;
 
 /**
@@ -42,6 +43,11 @@ class Order extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function find()
+    {
+        return new OrderQuery(get_called_class());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -58,5 +64,14 @@ class Order extends \yii\db\ActiveRecord
             'order_create_at' => 'Order Create At',
             'order_update_at' => 'Order Update At',
         ];
+    }
+
+    /**
+     * @param int $userId
+     * @return array|null|\yii\db\ActiveRecord|self
+     */
+    public function findFinishOne(int $userId)
+    {
+        return self::find()->byUserId($userId)->success()->one();
     }
 }

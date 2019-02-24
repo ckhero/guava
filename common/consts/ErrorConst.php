@@ -32,6 +32,7 @@ class ErrorConst
     const ERROR_LESSON_LOCK = 102002;
     const ERROR_LESSON_ALREADY_DONE = 102003;
     const ERROR_LESSON_NOT_DONE = 102004;
+    const ERROR_LESSON_NOT_PAID = 102005;
 
     public static $msg = [
         self::NO_ERROR => '成功',
@@ -56,6 +57,7 @@ class ErrorConst
         self::ERROR_LESSON_LOCK => '课程尚未解锁',
         self::ERROR_LESSON_ALREADY_DONE => '课程已经完成',
         self::ERROR_LESSON_NOT_DONE => '课程尚未完成',
+        self::ERROR_LESSON_NOT_PAID => '尚未购买课程',
     ];
 
     /**
