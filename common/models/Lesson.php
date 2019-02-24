@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\consts\ErrorConst;
 use common\consts\LessonConst;
+use common\exceptions\DefaultException;
 use Yii;
 
 /**
@@ -78,13 +80,16 @@ class Lesson extends \yii\db\ActiveRecord
 
     /**
      * @param int $lessonId
-     * @return array|null|\yii\db\ActiveRecord|self
+     * @return array|null|\yii\db\ActiveRecord
+     * @throws DefaultException
      */
     public function findByLessonId(int $lessonId)
     {
-        return self::find()->where([
+        $model = self::find()->where([
             'lesson_id' => $lessonId
-        ])->one();
+        ])->one();;
+        if (!$model) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_EXISTS);
+        return $model;
     }
 
     /**
