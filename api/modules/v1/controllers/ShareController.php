@@ -11,6 +11,7 @@ namespace api\modules\v1\controllers;
 
 use common\components\ApiController;
 use common\components\Format;
+use common\consts\ShareLogConst;
 use common\models\User;
 use common\services\ShareService;
 
@@ -23,7 +24,7 @@ class ShareController extends ApiController
     public function actionSave()
     {
         $lessonId = $this->getParam('id', 0);
-        $status = $this->getParam('status');
+        $status = $this->getParam('status', ShareLogConst::STATUS_FAIL);
         $user = (new User())->checkLogin();
 
         $res = (new ShareService())->save($user, $lessonId, $status);

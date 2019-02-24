@@ -12,8 +12,6 @@ namespace common\services;
 use common\components\Log;
 use common\consts\ErrorConst;
 use common\consts\LogTypeConst;
-use common\consts\ShareLogConst;
-use common\models\Lesson;
 use common\models\ShareLog;
 use common\models\User;
 use common\models\UserLesson;
@@ -27,7 +25,7 @@ class ShareService
      * @return bool
      * @throws \common\exceptions\DefaultException
      */
-    public function save(User $user, int $lessonId, string $status = ShareLogConst::STATUS_FAIL)
+    public function save(User $user, int $lessonId, string $status)
     {
         try {
             $shareLog = (new ShareLog())->create($user->user_id, $lessonId, '答题结束分享', $status);
