@@ -15,6 +15,7 @@ use Yii;
  * @property int $user_lesson_id
  * @property int $user_lesson_user_id 用户id
  * @property int $user_lesson_score 得分
+ * @property int $user_lesson_point
  * @property int $user_lesson_right_percent 正确率
  * @property int $user_lesson_lesson_id 学习记录课程ID
  * @property string $user_lesson_status 学习记录状态
@@ -44,7 +45,7 @@ class UserLesson extends \yii\db\ActiveRecord
     {
         return [
             [['user_lesson_user_id', 'user_lesson_right_percent', 'user_lesson_lesson_id', 'user_lesson_options'], 'required'],
-            [['user_lesson_user_id', 'user_lesson_score', 'user_lesson_right_percent', 'user_lesson_lesson_id'], 'integer'],
+            [['user_lesson_user_id', 'user_lesson_score', 'user_lesson_point', 'user_lesson_right_percent', 'user_lesson_lesson_id'], 'integer'],
             [['user_lesson_status', 'user_lesson_options', 'user_lesson_share_status'], 'string'],
             [['user_lesson_create_at', 'user_lesson_update_at'], 'safe'],
         ];
@@ -59,6 +60,7 @@ class UserLesson extends \yii\db\ActiveRecord
             'user_lesson_id' => 'User Lesson ID',
             'user_lesson_user_id' => 'User Lesson User ID',
             'user_lesson_score' => 'User Lesson Score',
+            'user_lesson_point' => 'User Lesson Score Point',
             'user_lesson_right_percent' => 'User Lesson Right Percent',
             'user_lesson_lesson_id' => 'User Lesson Lesson ID',
             'user_lesson_status' => 'User Lesson Status',

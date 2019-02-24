@@ -54,7 +54,7 @@ class ExaminationService
         return [
             'user_lesson_score' => $userLesson->user_lesson_score,
             'user_lesson_right_percent' => $userLesson->percent,
-            'point' => $point,
+            'point' => $userLesson->user_lesson_point,
         ];
     }
 }
