@@ -39,6 +39,7 @@ class ShareService
                 'user_id' => $user->user_id,
                 'lesson_id' => $lessonId,
                 'status' => $status,
+                'message' => $e->getMessage()
             ], LogTypeConst::TYPE_SAHRE);
         }
         return true;
