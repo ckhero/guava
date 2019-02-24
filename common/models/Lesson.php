@@ -20,7 +20,7 @@ use Yii;
  * @property string $lessonTypeText 课程类型
  * @property int $lessonTypeSort 课程排序
  * @property int $point 积分
- * @property LessonDatum $lessonDdtum 课程学习资料
+ * @property LessonDatum $lessonDatum 课程学习资料
  * @property LessonQuestion[] $lessonQuestions 课程题目
  * @property int $questionNum 题目个数
  */
