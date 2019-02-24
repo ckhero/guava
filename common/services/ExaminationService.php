@@ -46,14 +46,14 @@ class ExaminationService
                     $rightNum += 1;
                 }
             }
-            $rightPercent = intval($rightNum / $lesson->questionNum * 100);
+            $rightPercent = intval($rightNum / $lesson->questionNum * 10000);
             $userLesson = (new UserLesson())->create($user->user_id, $score, $rightPercent, $lessonId, $options, $rightPercent >= 60 ? UserLessonConst::STATUS_FINISH :UserLessonConst::STATUS_FAIL);
             $user->updatePoint($point, $userLesson->user_lesson_lesson_id);
         }
 
         return [
             'user_lesson_score' => $userLesson->user_lesson_score,
-            'user_lesson_right_percent' => $userLesson->user_lesson_right_percent,
+            'user_lesson_right_percent' => $userLesson->percent,
             'point' => $point,
         ];
     }

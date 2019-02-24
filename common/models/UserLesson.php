@@ -25,6 +25,7 @@ use Yii;
  *
  * @property User $user 用户
  * @property Lesson $lesson 课程
+ * @property string $percent 课程
  */
 class UserLesson extends \yii\db\ActiveRecord
 {
@@ -182,5 +183,13 @@ class UserLesson extends \yii\db\ActiveRecord
         }
 
         return $model;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getPercent()
+    {
+        return $this->user_lesson_right_percent / 100;
     }
 }
