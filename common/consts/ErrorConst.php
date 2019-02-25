@@ -41,6 +41,14 @@ class ErrorConst
     //分享
     const ERROR_SHARE_SAVE_FAIL = 103005;
 
+    //后台相关
+    const ERROR_ADMIN_USER_SAVE_FAIL = 104006;
+    const ERROR_ADMIN_USER_LOGIN_FAIL = 104007;
+    const ERROR_ADMIN_USER_PASSWORD_INVALID = 104008;
+    const ERROR_ADMIN_USER_NOT_LOGIN = 104009;
+    const ERROR_ADMIN_USER_NOT_EXISTS = 104010;
+    const ERROR_ADMIN_USER_EMAIL_USED = 104011;
+
     public static $msg = [
         self::NO_ERROR => '成功',
         self::ERROR_SYSTEM_ERROR => '系统繁忙，请稍后重试',
@@ -72,6 +80,14 @@ class ErrorConst
 
         //分享
         self::ERROR_SHARE_SAVE_FAIL => '分享保存失败',
+
+        //后台相关
+        self::ERROR_ADMIN_USER_SAVE_FAIL => '用户保存失败',
+        self::ERROR_ADMIN_USER_LOGIN_FAIL => '用户登录失败',
+        self::ERROR_ADMIN_USER_PASSWORD_INVALID => '密码不争取',
+        self::ERROR_ADMIN_USER_NOT_LOGIN => '用户尚未登陆',
+        self::ERROR_ADMIN_USER_NOT_EXISTS => '用户不存在',
+        self::ERROR_ADMIN_USER_EMAIL_USED => '邮箱已被使用',
     ];
 
     /**

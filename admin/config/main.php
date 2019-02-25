@@ -43,4 +43,9 @@ return [
         */
     ],
     'params' => $params,
+    'modules' => [
+        'v1' => [
+            'class' => 'admin\modules\v1\Module',
+        ],
+    ],
 ];
