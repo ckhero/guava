@@ -24,6 +24,9 @@ use Yii;
  * @property string $admin_user_expire_at
  * @property string $admin_user_create_at
  * @property string $admin_user_update_at
+ *
+ * @property Role[] $roles
+ * @property AdminUserRole[] $adminUserRoles
  */
 class AdminUser extends \yii\db\ActiveRecord
 {
@@ -74,25 +77,27 @@ class AdminUser extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param string $adminUserName
-     * @param string $adminUserEmail
-     * @param string $adminUserPassord
-     * @return AdminUser
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @param int $userId
+     * @return AdminUser|array|bool|null|\yii\db\ActiveRecord
+     * @throws DefaultException
      * @throws \yii\base\Exception
      */
-    public function create(string $adminUserName, string $adminUserEmail, string $adminUserPassord)
+    public function create(string $name, string $email, string $password, int $userId = 0)
     {
-        $model = (new self())->findByEmail($adminUserEmail);
-        if ($model) throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_EMAIL_USED);
-
-        $model = new self();
-        $model->admin_user_name = $adminUserName;
-        $model->admin_user_email = $adminUserEmail;
-        $model->admin_user_password = Yii::$app->security->generatePasswordHash($adminUserPassord);
+        $model = self::findOne($userId);
+        $this->isEmailValid($email, $userId);
+        if (!$model) $model = new self();
+        $model->admin_user_name = $name;
+        $model->admin_user_email = $email;
+        $model->admin_user_password = Yii::$app->security->generatePasswordHash($password);
         $model->admin_user_status = AdminUserConst::STATUS_VALID;
 
         if (!$model->save()) {
             Log::error(ErrorConst::ERROR_ADMIN_USER_SAVE_FAIL, [func_get_args(), 'message' => $model->getFirstErrors()], LogTypeConst::TYPE_ADMIN);
+            throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_SAVE_FAIL);
         }
         return $model;
     }
@@ -107,6 +112,7 @@ class AdminUser extends \yii\db\ActiveRecord
         $this->admin_user_expire_at = Carbon::now()->addDays(1)->toDateTimeString();
         if (!$this->save()) {
             Log::error(ErrorConst::ERROR_ADMIN_USER_SAVE_FAIL, [func_get_args(), 'message' => $this->getFirstErrors()], LogTypeConst::TYPE_ADMIN);
+            throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_SAVE_FAIL);
         }
         return [
             'token' => $this->admin_user_token,
@@ -158,6 +164,38 @@ class AdminUser extends \yii\db\ActiveRecord
             ->limit($pageSize)
             ->orderBy('admin_user_id desc')
             ->all();
-        return [$list, $total];
+        return [$total, $list];
+    }
+
+    /**
+     * @param string $email
+     * @param int $userId
+     * @return bool
+     * @throws DefaultException
+     */
+    public function isEmailValid(string $email, $userId = 0) {
+        $model = $this->findByEmail($email);
+        if ($model && $model->admin_user_id != $userId) throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_EMAIL_USED);
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = [];
+        foreach ($this->adminUserRoles as $adminUserRole) {
+            $roles[] = $adminUserRole->role;
+        }
+        return $roles;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdminUserRoles()
+    {
+        return $this->hasMany(AdminUserRole::className(), ['admin_user_role_admin_user_id' => 'admin_user_id']);
     }
 }

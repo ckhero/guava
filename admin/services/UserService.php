@@ -10,6 +10,7 @@ namespace admin\services;
 
 
 use admin\models\AdminUser;
+use admin\models\AdminUserRole;
 use common\consts\ErrorConst;
 use common\exceptions\DefaultException;
 
@@ -22,11 +23,13 @@ class UserService extends BaseService
      * @return array
      * @throws \yii\base\Exception
      */
-    public function create(string $adminUserName, string $adminUserEmail, string $adminUserPassord)
+    public function create(string $name, string $email, string $password, array $roles = [], int $userId = 0)
     {
-        if (empty($adminUserName) || empty($adminUserEmail) || empty($adminUserPassord)) throw new DefaultException(ErrorConst::ERROR_SYSTEM_PARAMS);
+        if (empty($name) || empty($email) || empty($password)) throw new DefaultException(ErrorConst::ERROR_SYSTEM_PARAMS);
 
-        $adminUser = (new AdminUser())->create($adminUserName, $adminUserEmail, $adminUserPassord);
+        $adminUser = (new AdminUser())->create($name, $email, $password, $userId);
+        (new AdminUserRole())->updateAdminUserRoles($adminUser->admin_user_id, $roles);
+
         return $adminUser->login();
     }
 
@@ -54,7 +57,24 @@ class UserService extends BaseService
     public function list(int $currPage, int $pageSize)
     {
         list($total, $list) = (new AdminUser())->list($currPage, $pageSize);
-
-        return ['total' => $total, 'list' => $list];
+        $data = [];
+        /**
+         * @var $adminUser AdminUser
+         */
+        foreach ($list as $adminUser) {
+            $roles = [];
+            foreach ($adminUser->roles as $role) {
+                $roles[] = $role->role_id;
+            }
+            $data[] = [
+                'roles' => $roles,
+                'admin_user_id' => $adminUser->admin_user_id,
+                'admin_user_name' => $adminUser->admin_user_name,
+                'admin_user_email' => $adminUser->admin_user_email,
+                'admin_user_status' => $adminUser->admin_user_status,
+                'roles' => $roles,
+            ];
+        }
+        return ['total' => $total, 'list' => $data];
     }
 }

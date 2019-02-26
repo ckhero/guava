@@ -20,10 +20,13 @@ class UserController extends AdminController
      */
     public function actionCreate()
     {
-        $adminUserName = $this->getParam('name');
-        $adminUserEmail = $this->getParam('email');
-        $adminUserPassword = $this->getParam('password');
-        $res = (new UserService($this->adminUser))->create($adminUserName, $adminUserEmail, $adminUserPassword);
+        $name = $this->getParam('name');
+        $email = $this->getParam('email');
+        $password = $this->getParam('password');
+        $roles = $this->getParam('roles', []);
+        $userId = $this->getParam('user_id', 0);
+
+        $res = (new UserService($this->adminUser))->create($name, $email, $password, $roles, $userId);
         return Format::success($res);
     }
 

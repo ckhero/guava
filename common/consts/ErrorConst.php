@@ -48,6 +48,10 @@ class ErrorConst
     const ERROR_ADMIN_USER_NOT_LOGIN = 104009;
     const ERROR_ADMIN_USER_NOT_EXISTS = 104010;
     const ERROR_ADMIN_USER_EMAIL_USED = 104011;
+    const ERROR_ADMIN_USER_ROLE_SAVE_FAIL = 104012;
+    const ERROR_ADMIN_ROLE_SAVE_FAIL = 104013;
+    const ERROR_ADMIN_ROLE_PRIVILGE_SAVE_FAIL = 104014;
+    const ERROR_ADMIN_PRIVILGE_SAVE_FAIL = 104015;
 
     public static $msg = [
         self::NO_ERROR => '成功',
@@ -88,6 +92,10 @@ class ErrorConst
         self::ERROR_ADMIN_USER_NOT_LOGIN => '用户尚未登陆',
         self::ERROR_ADMIN_USER_NOT_EXISTS => '用户不存在',
         self::ERROR_ADMIN_USER_EMAIL_USED => '邮箱已被使用',
+        self::ERROR_ADMIN_USER_ROLE_SAVE_FAIL => '用户角色更新失败',
+        self::ERROR_ADMIN_ROLE_SAVE_FAIL => '角色更新失败',
+        self::ERROR_ADMIN_ROLE_PRIVILGE_SAVE_FAIL => '角色权限更新失败',
+        self::ERROR_ADMIN_PRIVILGE_SAVE_FAIL => '权限更新失败',
     ];
 
     /**
