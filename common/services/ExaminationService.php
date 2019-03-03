@@ -38,7 +38,7 @@ class ExaminationService
             $point = $score = $rightNum = 0;
 
             foreach ($options as $option) {
-
+                if (!$option) continue;
                 $lessonQuestion = (new LessonQuestion())->findByQuestionId($option['lesson_question_id']);
                 if ($lessonQuestion->checkOption($option['option'])) {
                     $point +=  $lesson->point;
