@@ -40,9 +40,9 @@ class UserService extends BaseService
      * @throws DefaultException
      * @throws \yii\base\Exception
      */
-    public function login(string $email, string $password)
+    public function login(string $name, string $password)
     {
-        $adminUser = (new AdminUser())->findByEmail($email);
+        $adminUser = (new AdminUser())->findByName($name);
         if (!$adminUser) throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_NOT_EXISTS);
 
         if (!$adminUser->checkPassword($password)) throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_PASSWORD_INVALID);

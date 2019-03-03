@@ -36,10 +36,10 @@ class UserController extends AdminController
      */
     public function actionLogin()
     {
-        $email = $this->getParam('email');
+        $name = $this->getParam('username');
         $password = $this->getParam('password');
 
-        $res = (new UserService())->login($email, $password);
+        $res = (new UserService())->login($name, $password);
         return Format::success($res);
     }
 

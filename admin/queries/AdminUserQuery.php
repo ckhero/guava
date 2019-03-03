@@ -24,6 +24,11 @@ class AdminUserQuery extends ActiveQuery
         return $this->andOnCondition(['admin_user_email' => $email]);
     }
 
+    public function byName($name)
+    {
+        return $this->andOnCondition(['admin_user_name' => $name]);
+    }
+
     public function byPassword($password)
     {
         return $this->andOnCondition(['admin_user_password' => $password]);

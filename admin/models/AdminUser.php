@@ -88,7 +88,7 @@ class AdminUser extends \yii\db\ActiveRecord
     public function create(string $name, string $email, string $password, int $userId = 0)
     {
         $model = self::findOne($userId);
-        $this->isEmailValid($email, $userId);
+        $this->isNameValid($email, $userId);
         if (!$model) $model = new self();
         $model->admin_user_name = $name;
         $model->admin_user_email = $email;
@@ -140,6 +140,11 @@ class AdminUser extends \yii\db\ActiveRecord
         return self::find()->byEmail($email)->one();
     }
 
+    public function findByName(string $name)
+    {
+        return self::find()->byName($name)->one();
+    }
+
     /**
      * @param string $password
      * @return bool
@@ -175,6 +180,18 @@ class AdminUser extends \yii\db\ActiveRecord
      */
     public function isEmailValid(string $email, $userId = 0) {
         $model = $this->findByEmail($email);
+        if ($model && $model->admin_user_id != $userId) throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_EMAIL_USED);
+        return true;
+    }
+
+    /**
+     * @param string $name
+     * @param int $userId
+     * @return bool
+     * @throws DefaultException
+     */
+    public function isNameValid(string $name, $userId = 0) {
+        $model = $this->findByName($name);
         if ($model && $model->admin_user_id != $userId) throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_EMAIL_USED);
         return true;
     }

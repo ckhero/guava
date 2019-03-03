@@ -78,6 +78,7 @@ class LessonService
         return [
             'lesson_datum' => $lessonDatum,
             'questions' => $questions,
+            'check' => false
         ];
     }
 
