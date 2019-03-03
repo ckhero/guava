@@ -64,6 +64,7 @@ class LessonService
                 $options[$item->lesson_question_item_option] = [
                     'lesson_question_item_option' => $item->lesson_question_item_option,
                     'lesson_question_item_detail' => $item->lesson_question_item_detail,
+                    'check' => false
                 ];
             }
             ksort($options);
@@ -77,8 +78,7 @@ class LessonService
         }
         return [
             'lesson_datum' => $lessonDatum,
-            'questions' => $questions,
-            'check' => false
+            'questions' => $questions
         ];
     }
 
