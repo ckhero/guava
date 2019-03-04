@@ -57,4 +57,24 @@ class ExaminationService
             'user_lesson_point' => $userLesson->user_lesson_point,
         ];
     }
+
+    /**
+     * @param User $user
+     * @param int $lessonId
+     * @return array
+     * @throws DefaultException
+     */
+    public function result(User $user, int $lessonId)
+    {
+        $lesson = (new Lesson())->findByLessonId($lessonId);
+        (new LessonService())->checkPaid($user, $lesson);
+
+        $userLesson = (new UserLesson())->getOne($user->user_id, $lessonId);
+        if (!$userLesson) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_DONE);
+        return [
+            'user_lesson_score' => $userLesson->user_lesson_score,
+            'user_lesson_right_percent' => $userLesson->percent,
+            'user_lesson_point' => $userLesson->user_lesson_point,
+        ];
+    }
 }

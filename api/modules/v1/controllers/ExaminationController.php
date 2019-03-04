@@ -34,4 +34,17 @@ class ExaminationController extends ApiController
         $res = (new ExaminationService())->save($user, $lessonId, $options);
         return Format::success($res);
     }
+
+    /**
+     * @return array
+     * @throws \common\exceptions\DefaultException
+     */
+    public function actionResult()
+    {
+        $lessonId = $this->getParam('id', 0);
+        $user = (new User())->checkLogin();
+
+        $res = (new ExaminationService())->result($user, $lessonId);
+        return Format::success($res);
+    }
 }
