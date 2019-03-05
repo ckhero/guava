@@ -54,4 +54,17 @@ class LessonController extends ApiController
         $res = (new LessonService())->payStatus($user, $lessonId);
         return Format::success($res);
     }
+
+    /**
+     * 课程列表
+     * @return array
+     * @throws \common\exceptions\DefaultException
+     */
+    public function actionList()
+    {
+        $user = (new User())->checkLogin();
+        $res = (new UserLessonService($user))->list();
+
+        return Format::success($res);
+    }
 }
