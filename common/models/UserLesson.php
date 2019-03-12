@@ -57,17 +57,17 @@ class UserLesson extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_lesson_id' => 'User Lesson ID',
-            'user_lesson_user_id' => 'User Lesson User ID',
-            'user_lesson_score' => 'User Lesson Score',
-            'user_lesson_point' => 'User Lesson Score Point',
-            'user_lesson_right_percent' => 'User Lesson Right Percent',
-            'user_lesson_lesson_id' => 'User Lesson Lesson ID',
-            'user_lesson_status' => 'User Lesson Status',
-            'user_lesson_options' => 'User Lesson Options',
-            'user_lesson_share_status' => 'User Lesson Share Status',
-            'user_lesson_create_at' => 'User Lesson Create At',
-            'user_lesson_update_at' => 'User Lesson Update At',
+            'user_lesson_id' => 'User LessonController ID',
+            'user_lesson_user_id' => 'User LessonController User ID',
+            'user_lesson_score' => 'User LessonController Score',
+            'user_lesson_point' => 'User LessonController Score Point',
+            'user_lesson_right_percent' => 'User LessonController Right Percent',
+            'user_lesson_lesson_id' => 'User LessonController LessonController ID',
+            'user_lesson_status' => 'User LessonController Status',
+            'user_lesson_options' => 'User LessonController Options',
+            'user_lesson_share_status' => 'User LessonController Share Status',
+            'user_lesson_create_at' => 'User LessonController Create At',
+            'user_lesson_update_at' => 'User LessonController Update At',
         ];
     }
 

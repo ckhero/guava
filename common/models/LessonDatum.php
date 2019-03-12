@@ -42,11 +42,11 @@ class LessonDatum extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'lesson_datum_id' => 'Lesson Datum ID',
-            'lesson_datum_lesson_id' => 'Lesson Datum Lesson ID',
-            'lesson_datum_datum_id' => 'Lesson Datum Datum ID',
-            'lesson_datum_create_at' => 'Lesson Datum Create At',
-            'lesson_datum_update_at' => 'Lesson Datum Update At',
+            'lesson_datum_id' => 'LessonController Datum ID',
+            'lesson_datum_lesson_id' => 'LessonController Datum LessonController ID',
+            'lesson_datum_datum_id' => 'LessonController Datum Datum ID',
+            'lesson_datum_create_at' => 'LessonController Datum Create At',
+            'lesson_datum_update_at' => 'LessonController Datum Update At',
         ];
     }
 

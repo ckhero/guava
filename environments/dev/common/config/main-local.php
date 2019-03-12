@@ -3,9 +3,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=guava',
+            'dsn' => 'mysql:host=47.92.215.41;dbname=guava',
             'username' => 'root',
-            'password' => '123123',
+            'password' => '123456',
             'charset' => 'utf8',
         ],
         'mailer' => [

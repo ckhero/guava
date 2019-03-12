@@ -52,13 +52,13 @@ class LessonQuestion extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'lesson_question_id' => 'Lesson Question ID',
-            'lesson_question_lesson_id' => 'Lesson Question Lesson ID',
-            'lesson_question_sort' => 'Lesson Question Sort',
-            'lesson_question_detail' => 'Lesson Question Detail',
-            'lesson_question_type' => 'Lesson Question Type',
-            'lesson_question_create_at' => 'Lesson Question Create At',
-            'lesson_question_update_at' => 'Lesson Question Update At',
+            'lesson_question_id' => 'LessonController Question ID',
+            'lesson_question_lesson_id' => 'LessonController Question LessonController ID',
+            'lesson_question_sort' => 'LessonController Question Sort',
+            'lesson_question_detail' => 'LessonController Question Detail',
+            'lesson_question_type' => 'LessonController Question Type',
+            'lesson_question_create_at' => 'LessonController Question Create At',
+            'lesson_question_update_at' => 'LessonController Question Update At',
         ];
     }
 

@@ -72,7 +72,6 @@ class UserService extends BaseService
                 'admin_user_name' => $adminUser->admin_user_name,
                 'admin_user_email' => $adminUser->admin_user_email,
                 'admin_user_status' => $adminUser->admin_user_status,
-                'roles' => $roles,
             ];
         }
         return ['total' => $total, 'list' => $data];

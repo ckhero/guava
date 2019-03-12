@@ -31,7 +31,8 @@ class UserService
      * @throws DefaultException
      */
     public function login(string $code, string $iv, string $encryptData)
-    {
+    {$user = '';
+        Yii::$app->trigger(EventConst::EVENT_LOGIN, (new LoginEvent($user)));
         try {
             $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
             $sessionInfo = $app->auth->session($code);

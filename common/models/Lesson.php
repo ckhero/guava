@@ -54,12 +54,12 @@ class Lesson extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'lesson_id' => 'Lesson ID',
-            'lesson_type' => 'Lesson Type',
-            'lesson_name' => 'Lesson Name',
-            'lesson_sort' => 'Lesson Sort',
-            'lesson_create_at' => 'Lesson Create At',
-            'lesson_update_at' => 'Lesson Update At',
+            'lesson_id' => 'LessonController ID',
+            'lesson_type' => 'LessonController Type',
+            'lesson_name' => 'LessonController Name',
+            'lesson_sort' => 'LessonController Sort',
+            'lesson_create_at' => 'LessonController Create At',
+            'lesson_update_at' => 'LessonController Update At',
         ];
     }
 
@@ -89,8 +89,20 @@ class Lesson extends \yii\db\ActiveRecord
     {
         $model = self::find()->where([
             'lesson_id' => $lessonId
-        ])->one();;
+        ])->one();
         if (!$model) throw new DefaultException(ErrorConst::ERROR_LESSON_NOT_EXISTS);
+        return $model;
+    }
+
+    /**
+     * @param int $lessonId
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public function findByLessonIdWithoutError(int $lessonId)
+    {
+        $model = self::find()->where([
+            'lesson_id' => $lessonId
+        ])->one();
         return $model;
     }
 
@@ -156,5 +168,70 @@ class Lesson extends \yii\db\ActiveRecord
     public function getQuestionNum()
     {
         return count($this->lessonQuestions);
+    }
+
+    /**
+     * @param $lessonType
+     * @param $lessonName
+     * @param $currPage
+     * @param $pageSize
+     * @return array
+     */
+    public function getListByCondition($lessonType, $lessonName, $currPage, $pageSize): array
+    {
+        $query = self::find();
+        $query->filterWhere(['lesson_type' => $lessonType]);
+        $query->andFilterWhere(['like', 'lesson_name', $lessonName]);
+        $total = (int) $query->count();
+        $query->offset(($currPage - 1) * $pageSize);
+        $query->limit($pageSize);
+        $query->orderBy('lesson_sort desc, lesson_type');
+        $list = $query->all();
+        return [$total, $list];
+    }
+
+    /**
+     * @param $lessonId
+     * @param $lessonType
+     * @param $lessonName
+     * @param $lessonSort
+     * @return array|Lesson|null|\yii\db\ActiveRecord
+     * @throws DefaultException
+     */
+    public function createOrUpdate($lessonId, $lessonType, $lessonName, $lessonSort)
+    {
+        $model = (new self())->findByLessonIdWithoutError($lessonId);
+        if (!(new self())->checkTypeAndSort($lessonId, $lessonType, $lessonSort)) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, '已存在该天的课程');
+        if (!$model) $model = new self();
+        $model->lesson_type = $lessonType;
+        $model->lesson_name = $lessonName;
+        $model->lesson_sort = $lessonSort;
+        if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, json_encode($model->getFirstErrors(), JSON_UNESCAPED_UNICODE));
+        return $model;
+    }
+
+    /**
+     * @param $lessonId
+     * @param $lessonType
+     * @param $lessonSort
+     * @return bool
+     */
+    public function checkTypeAndSort($lessonId, $lessonType, $lessonSort)
+    {
+        $model = (new self())->findByTypeAndSort($lessonType, $lessonSort);
+        if (!$model) return true;
+        return $model->lesson_id == $lessonId;
+    }
+    /**
+     * @param $lessonType
+     * @param $lessonSort
+     * @return array|null|\yii\db\ActiveRecord|self
+     */
+    public function findByTypeAndSort($lessonType, $lessonSort)
+    {
+        return self::find()->where([
+            'lesson_type' => $lessonType,
+            'lesson_sort' => $lessonSort,
+        ])->one();
     }
 }

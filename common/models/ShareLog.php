@@ -49,7 +49,7 @@ class ShareLog extends \yii\db\ActiveRecord
         return [
             'share_log_id' => 'Share Log ID',
             'share_log_user_id' => 'Share Log User ID',
-            'share_log_lesson_id' => 'Share Log Lesson ID',
+            'share_log_lesson_id' => 'Share Log LessonController ID',
             'share_log_desc' => 'Share Log Desc',
             'share_log_status' => 'Share Log Status',
             'share_log_create_at' => 'Share Log Create At',

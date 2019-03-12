@@ -44,13 +44,13 @@ class LessonQuestionItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'lesson_question_item_id' => 'Lesson Question Item ID',
-            'lesson_question_lesson_question_id' => 'Lesson Question Lesson Question ID',
-            'lesson_question_item_option' => 'Lesson Question Item Option',
-            'lesson_question_item_detail' => 'Lesson Question Item Detail',
-            'lesson_question_item_right' => 'Lesson Question Item Right',
-            'lesson_question_item_create_at' => 'Lesson Question Item Create At',
-            'lesson_question_item_update_at' => 'Lesson Question Item Update At',
+            'lesson_question_item_id' => 'LessonController Question Item ID',
+            'lesson_question_lesson_question_id' => 'LessonController Question LessonController Question ID',
+            'lesson_question_item_option' => 'LessonController Question Item Option',
+            'lesson_question_item_detail' => 'LessonController Question Item Detail',
+            'lesson_question_item_right' => 'LessonController Question Item Right',
+            'lesson_question_item_create_at' => 'LessonController Question Item Create At',
+            'lesson_question_item_update_at' => 'LessonController Question Item Update At',
         ];
     }
 }
