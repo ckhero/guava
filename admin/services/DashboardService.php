@@ -16,7 +16,7 @@ use common\models\User;
 
 class DashboardService extends BaseService
 {
-    const DAY = 6;
+    const DAY = 5;
 
     public function index()
     {
