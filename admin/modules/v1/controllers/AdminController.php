@@ -40,7 +40,7 @@ class AdminController extends ApiController
         $uri = $action->controller->module->id . '/' . $action->controller->id . '/' . $action->id;
         $this->uri = $uri;
 
-//        if (!in_array($this->uri, $this->whiteList)) {
+        //if (!in_array($this->uri, $this->whiteList) && !Yii::$app->request->isOptions) {
 //            $this->adminUser = (new AdminUser())->findByToken(Yii::$app->request->headers->get('x-token'));
 //            if (!$this->adminUser) throw new DefaultException(ErrorConst::ERROR_ADMIN_USER_NOT_LOGIN);
 //        }

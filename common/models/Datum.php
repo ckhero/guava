@@ -3,7 +3,10 @@
 namespace common\models;
 
 use common\consts\DatumConst;
+use common\consts\ErrorConst;
+use common\exceptions\DefaultException;
 use common\queries\DatumQuery;
+use simpleDI\AnotherCest;
 use Yii;
 
 /**
@@ -77,5 +80,28 @@ class Datum extends \yii\db\ActiveRecord
             ->all();
 
         return $list;
+    }
+
+    /**
+     * @param $datumId
+     * @param $datumName
+     * @param $datumDetail
+     * @param string $datumType
+     * @param string $datumDetailType
+     * @return Datum|null
+     * @throws DefaultException
+     */
+    public function createOrUpdate($datumId, $datumName, $datumDetail, $datumType = DatumConst::TYPE_LESSON, $datumDetailType = DatumConst::DETAIL_TYPE_IMG)
+    {
+        $model = self::findOne($datumId);
+        if (!$model) $model = new self();
+        $model->datum_type = $datumType;
+        $model->datum_detail_type = $datumDetailType;
+        $model->datum_name = $datumName;
+        $model->datum_detail = $datumDetail;
+
+        if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, json_encode($model->getFirstErrors(), JSON_UNESCAPED_UNICODE));
+        return $model;
+
     }
 }

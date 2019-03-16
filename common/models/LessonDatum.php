@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\consts\ErrorConst;
+use common\exceptions\DefaultException;
 use Yii;
 
 /**
@@ -56,5 +58,33 @@ class LessonDatum extends \yii\db\ActiveRecord
     public function getDatum()
     {
         return $this->hasOne(Datum::className(), ['datum_id' => 'lesson_datum_datum_id']);
+    }
+
+    /**
+     * @param $lessonId
+     * @param $datumId
+     * @return array|LessonDatum|null|\yii\db\ActiveRecord
+     * @throws DefaultException
+     */
+    public function createOrUpdate($lessonId, $datumId)
+    {
+        $model = (new self())->findByLessonId($lessonId);
+        if (!$model) $model = new self();
+        $model->lesson_datum_lesson_id = $lessonId;
+        $model->lesson_datum_datum_id = $datumId;
+
+        if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, json_encode($model->getFirstErrors(), JSON_UNESCAPED_UNICODE));
+        return $model;
+    }
+
+    /**
+     * @param int $lessonId
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public function findByLessonId(int $lessonId)
+    {
+        return self::find()->where([
+            'lesson_datum_lesson_id' => $lessonId
+        ])->one();
     }
 }

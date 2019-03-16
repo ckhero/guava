@@ -58,7 +58,7 @@ class MenuController extends AdminController
 //        meta: { title: 'selectExcel' }
 //      },
 //      {
-//          path: 'upload-excel',
+//          path: 'uploads-excel',
 //        component: () => import('@/views/excel/uploadExcel'),
 //        name: 'UploadExcel',
 //        meta: { title: 'uploadExcel' }

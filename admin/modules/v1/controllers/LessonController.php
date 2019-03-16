@@ -37,8 +37,10 @@ class LessonController extends AdminController
         $lessonSort = (int) $this->getParam('lesson_sort');
         $lessonType = $this->getParam('lesson_type');
         $lessonName = $this->getParam('lesson_name');
+        $datum = $this->getParam('datum');
+        $questions = $this->getParam('questions');
 
-        $res = (new LessonService())->create($lessonId, $lessonType, $lessonName, $lessonSort);
+        $res = (new LessonService())->create($lessonId, $lessonType, $lessonName, $lessonSort, $datum, $questions);
         return Format::success($res);
     }
 }

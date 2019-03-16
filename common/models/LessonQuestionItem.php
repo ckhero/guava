@@ -2,6 +2,9 @@
 
 namespace common\models;
 
+use common\consts\ErrorConst;
+use common\consts\LessonQuestionItemConst;
+use common\exceptions\DefaultException;
 use Yii;
 
 /**
@@ -52,5 +55,47 @@ class LessonQuestionItem extends \yii\db\ActiveRecord
             'lesson_question_item_create_at' => 'LessonController Question Item Create At',
             'lesson_question_item_update_at' => 'LessonController Question Item Update At',
         ];
+    }
+
+    /**
+     * @param $id
+     * @param $questionId
+     * @param $option
+     * @param $detail
+     * @param $right
+     * @return LessonQuestionItem|null
+     * @throws DefaultException
+     */
+    public function createOrUpdate($id, $questionId, $option, $detail, $right)
+    {
+        $model = self::findOne($id);
+        if (!$model) $model = new self();
+        $model->lesson_question_lesson_question_id = $questionId;
+        $model->lesson_question_item_option = $option;
+        $model->lesson_question_item_detail = $detail;
+        $model->lesson_question_item_right = $right;
+        if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, json_encode($model->getFirstErrors(), JSON_UNESCAPED_UNICODE));
+        return $model;
+    }
+
+    /**
+     * @param $options
+     * @param $questionId
+     * @param $rightOption
+     * @return array
+     * @throws DefaultException
+     */
+    public function mutliCreateOrUpdate($options, $questionId, $rightOption)
+    {
+        $res = [];
+        foreach ($options as $option) {
+            $res[] = (new self())->createOrUpdate(
+                $option['lesson_question_item_id'] ?? 0,
+                $questionId, $option['lesson_question_item_option'],
+                $option['lesson_question_item_detail'],
+                $option['lesson_question_item_option'] === $rightOption ? LessonQuestionItemConst::STATUS_RIGHT_YES : LessonQuestionItemConst::STATUS_RIGHT_NO
+                );
+        }
+        return $res;
     }
 }

@@ -15,6 +15,7 @@ class ErrorConst
 
     const ERROR_SYSTEM_ERROR = 100001;  //系统异常
     const ERROR_SYSTEM_PARAMS = 100002;  //参数错误
+    const ERROR_UPLOAD_FAIL = 100003;
 
     //用户相关
     const ERROR_USER_TOKEN_SAVE_FAIL = 101001;
@@ -58,6 +59,7 @@ class ErrorConst
         self::NO_ERROR => '成功',
         self::ERROR_SYSTEM_ERROR => '系统繁忙，请稍后重试',
         self::ERROR_SYSTEM_PARAMS => '参数错误',
+        self::ERROR_UPLOAD_FAIL => '上传失败',
 
         //用户相关
         self::ERROR_USER_TOKEN_SAVE_FAIL => 'token保存失败',

@@ -67,7 +67,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
      */
     public function getLessonQuestionItems()
     {
-        return $this->hasMany(LessonQuestionItem::className(), ['lesson_question_lesson_question_id' => 'lesson_question_id']);
+        return $this->hasMany(LessonQuestionItem::className(), ['lesson_question_lesson_question_id' => 'lesson_question_id'])->orderBy('lesson_question_item_option');
     }
 
     /**
@@ -116,5 +116,42 @@ class LessonQuestion extends \yii\db\ActiveRecord
     public function getScore(): int
     {
         return 20;
+    }
+
+    /**
+     * @param $lessonQuestionId
+     * @param $lessonQuestionLessonId
+     * @param $lessonQuestionSort
+     * @param $lessonQuestionDetail
+     * @param $lessonQuestionType
+     * @return LessonQuestion|null
+     * @throws DefaultException
+     */
+    public function createOrUpdate($lessonQuestionId, $lessonQuestionLessonId, $lessonQuestionSort, $lessonQuestionDetail, $lessonQuestionType)
+    {
+        $model = self::findOne($lessonQuestionId);
+        if (!$model) $model = new self();
+        $model->lesson_question_lesson_id = $lessonQuestionLessonId;
+        $model->lesson_question_sort = $lessonQuestionSort;
+        $model->lesson_question_detail = $lessonQuestionDetail;
+        $model->lesson_question_type = $lessonQuestionType;
+        if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, json_encode($model->getFirstErrors(), JSON_UNESCAPED_UNICODE));
+        return $model;
+    }
+    public function multiCreateOrUpdate($questions, $lessonId)
+    {
+        $res = [];
+        foreach ($questions as $question) {
+            $questionModel = (new self())->createOrUpdate(
+                ($question['lesson_question_id'] ?? 0),
+                $lessonId,
+                ($question['lesson_question_sort'] ?? 1),
+                ($question['lesson_question_detail'] ?? ''),
+                ($question['lesson_question_type'] ?? 'text')
+            );
+            $lessonQuestionItem = (new LessonQuestionItem())->mutliCreateOrUpdate($question['lesson_question_items'], $questionModel->lesson_question_id, $question['lesson_question_right_option']);
+            $res[] = $questionModel;
+        }
+        return $res;
     }
 }

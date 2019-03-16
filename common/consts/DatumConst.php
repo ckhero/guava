@@ -15,4 +15,5 @@ class DatumConst
     const TYPE_LESSON = 'lesson';
 
     const DETAIL_TYPE_URL = 'url';
+    const DETAIL_TYPE_IMG = 'img';
 }

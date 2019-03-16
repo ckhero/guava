@@ -12,5 +12,6 @@ return [
             'level' => 'debug',
             'file' => __DIR__.'/../../api/runtime/logs/wechat.log',
         ],
-    ]
+    ],
+    'uploads' => '../../uploads/'
 ];

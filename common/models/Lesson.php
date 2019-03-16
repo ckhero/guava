@@ -127,7 +127,7 @@ class Lesson extends \yii\db\ActiveRecord
      */
     public function getLessonQuestions()
     {
-        return $this->hasMany(LessonQuestion::className(), ['lesson_question_lesson_id' => 'lesson_id']);
+        return $this->hasMany(LessonQuestion::className(), ['lesson_question_lesson_id' => 'lesson_id'])->orderBy('lesson_question_sort');
     }
 
     /**
