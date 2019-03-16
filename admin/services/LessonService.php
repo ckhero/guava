@@ -83,7 +83,7 @@ class LessonService extends BaseService
         $tran = \Yii::$app->db->beginTransaction();
         try {
             $lesson = (new Lesson())->createOrUpdate($lessonId, $lessonType, $lessonName, $lessonSort);
-            $datum = (new Datum())->createOrUpdate($datum['datum_id'], $datum['datum_name'], $datum['datum_detail']);
+            $datum = (new Datum())->createOrUpdate($datum['datum_id'] ?? '', $datum['datum_name'], $datum['datum_detail']);
             (new LessonDatum())->createOrUpdate($lesson->lesson_id, $datum->datum_id);
             (new LessonQuestion())->multiCreateOrUpdate($questions, $lesson->lesson_id);
             $tran->commit();
