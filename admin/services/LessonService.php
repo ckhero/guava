@@ -48,7 +48,7 @@ class LessonService extends BaseService
                     'lesson_question_detail' => $lessonQuestion->lesson_question_detail,
                     'lesson_question_type' => $lessonQuestion->lesson_question_type,
                     'lesson_question_sort' => $lessonQuestion->lesson_question_sort,
-                    'lesson_question_right_option' => $lessonQuestion->lessonQuestionRightItem->lesson_question_item_option,
+                    'lesson_question_right_option' => $lessonQuestion->lessonQuestionRightItem->lesson_question_item_option ?? '',
                 ];
             }
             $list[] = [
