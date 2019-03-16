@@ -57,11 +57,11 @@ class LessonService extends BaseService
                 'lesson_name' => $lesson->lesson_name,
                 'lesson_sort' => $lesson->lesson_sort,
                 'datum' => [
-                    'datum_id' => $lesson->lessonDatum->datum->datum_id,
-                    'datum_name' => $lesson->lessonDatum->datum->datum_name,
-                    'datum_detail' => $lesson->lessonDatum->datum->datum_detail,
-                    'datum_type' => $lesson->lessonDatum->datum->datum_type,
-                    'datum_detail_type' => $lesson->lessonDatum->datum->datum_detail_type,
+                    'datum_id' => $lesson->lessonDatum->datum->datum_id ?? '',
+                    'datum_name' => $lesson->lessonDatum->datum->datum_name ?? '',
+                    'datum_detail' => $lesson->lessonDatum->datum->datum_detail ?? '',
+                    'datum_type' => $lesson->lessonDatum->datum->datum_type ?? '',
+                    'datum_detail_type' => $lesson->lessonDatum->datum->datum_detail_type ?? '',
                 ],
                 'questions' => $questions
             ];
