@@ -13,5 +13,11 @@ return [
             'file' => __DIR__.'/../../api/runtime/logs/wechat.log',
         ],
     ],
-    'uploads' => '../../uploads/'
+    'uploads' => [
+        'path' => '../../uploads/',
+        'url' => 'http://guava-admin.com/uploads/',
+    ],
+    'domain' => [
+        'site' => 'http://guava-admin.com',
+    ],
 ];

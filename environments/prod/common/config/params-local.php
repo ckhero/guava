@@ -12,5 +12,12 @@ return [
             'level' => 'debug',
             'file' =>  __DIR__.'/../../api/runtime/logs/wechat.log',
         ],
-    ]
+    ],
+    'uploads' => [
+        'path' => '../../uploads/',
+        'url' => 'http://guava.51qwer.com/uploads/',
+    ],
+    'domain' => [
+        'site' => 'http://guava.51qwer.com',
+    ],
 ];

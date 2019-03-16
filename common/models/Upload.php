@@ -31,8 +31,8 @@ class Upload extends Model
             $files = [];
             foreach ($this->imageFiles as $file) {
                 $fileName =  \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-                $file->saveAs(\Yii::$app->params['uploads'] . $fileName);
-                $files[] = 'http://guava-admin.com/uploads/' . $fileName;
+                $file->saveAs(\Yii::$app->params['uploads']['path'] . $fileName);
+                $files[] = \Yii::$app->params['uploads']['url'] . $fileName;
             }
             return $files;
         } else {
