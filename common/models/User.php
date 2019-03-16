@@ -224,4 +224,32 @@ class User extends \yii\db\ActiveRecord
     {
         return Carbon::now()->diffInDays(Carbon::parse($this->user_create_at)) + 1;
     }
+
+    /**
+     * @param $userPayStatus
+     * @param $userId
+     * @param $userName
+     * @param $userPhone
+     * @param $page
+     * @param $limit
+     * @return array
+     */
+    public function list($userPayStatus, $userId, $userName, $userPhone, $page, $limit)
+    {
+        $query = self::find();
+        $query->filterWhere([
+            'user_id' => $userId,
+            'user_pay_status' => $userPayStatus,
+            'user_phone' => $userPhone,
+        ]);
+        $query->andFilterWhere(['like', 'user_name', $userName]);
+
+        $total = (int) $query->count();
+        $query->orderBy('user_id desc');
+        $query->offset(($page - 1) * $limit);
+        $query->limit($limit);
+
+        $list = $query->all();
+        return [$total, $list];
+    }
 }

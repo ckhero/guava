@@ -17,6 +17,9 @@ use Yii;
  * @property string $order_desc 订单描述
  * @property string $order_create_at 订单创建时间
  * @property string $order_update_at 订单更新时间
+ *
+ * @property string $orderAmount 金额元
+ * @property User $user 用户
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -73,5 +76,46 @@ class Order extends \yii\db\ActiveRecord
     public function findFinishOne(int $userId)
     {
         return self::find()->byUserId($userId)->success()->one();
+    }
+
+    /**
+     * @param $status
+     * @param $startTime
+     * @param $endTime
+     * @param $orderNo
+     * @param $page
+     * @param $limit
+     * @return array
+     */
+    public function list($status, $startTime, $endTime, $orderNo, $page, $limit)
+    {
+        $query = self::find();
+        $query->filterWhere([
+            'order_status' => $status,
+            'order_no' => $orderNo,
+        ]);
+        $query->andFilterWhere(['between', 'order_create_at', $startTime, $endTime]);
+        $total = (int) $query->count();
+        $query->orderBy('order_id desc');
+        $query->offset(($page - 1) * $limit);
+        $query->limit($limit);
+        $list = $query->all();
+        return [$total, $list];
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderAmount()
+    {
+        return round($this->order_amount / 100, 2);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['user_id' => 'order_user_id']);
     }
 }
