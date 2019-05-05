@@ -58,6 +58,7 @@ class AdminUserRole extends \yii\db\ActiveRecord
      */
     public function updateAdminUserRoles(int $userId, array $roles = [])
     {
+
         $tran = Yii::$app->db->beginTransaction();
         try {
             self::deleteAll([
