@@ -31,10 +31,10 @@ class OrderService
     {
         $app = Factory::payment(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
         $order = (new Order())->findByUserId($user->user_id);
-        if ($order) {
-            if (!$order->isFinalStatus()) throw new DefaultException(ErrorConst::ERROR_ORDER_PAYING);
-            if ($order->isSucc()) throw new DefaultException(ErrorConst::ERROR_ORDER_DONE);
-        }
+//        if ($order) {
+//            if (!$order->isFinalStatus()) throw new DefaultException(ErrorConst::ERROR_ORDER_PAYING);
+//            if ($order->isSucc()) throw new DefaultException(ErrorConst::ERROR_ORDER_DONE);
+//        }
         $order = (new Order())->addOne($user->user_id, 1, '课程购买');
         $result = $app->order->unify([
             'body' => $order->order_desc,
@@ -45,15 +45,15 @@ class OrderService
         ]);
         Log::info("支付结果", $result, LogTypeConst::TYPE_ORDER);
         $time = (string) time();
-        $str = md5("appId=wxfc3abbaf412150d2&nonceStr{$result['nonce_str']}&package=prepay_id={$result['prepay_id']}signType=MD5&timeStamp={$time}&key=4f1e6dc4b64bfbd9b11cb084a67c4e76");
+        $str = "appId=wxfc3abbaf412150d2&nonceStr{$result['nonce_str']}&package=prepay_id={$result['prepay_id']}signType=MD5&timeStamp={$time}&key=4f1e6dc4b64bfbd9b11cb084a67c4e76";
 
         return [
             'timeStamp' => $time,
             'nonceStr' => $result['nonce_str'],
             'package' => "prepay_id=" . $result['prepay_id'],
-            'paySign' => strtoupper($str),
+            'paySign' => strtoupper(md5($str)),
             'paySign2' => $str,
-                'orderNo' => $order->order_no,
+            'orderNo' => $order->order_no,
         ];
     }
 
