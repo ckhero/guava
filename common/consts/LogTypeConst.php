@@ -16,6 +16,7 @@ class LogTypeConst
     const TYPE_POINT = 'point'; // 积分
     const TYPE_USER_LESSON = 'user_lesson'; // 积分
     const TYPE_SAHRE = 'share'; // 积分
+    const TYPE_ORDER = 'order'; // 积分
 
 
     //后台相关

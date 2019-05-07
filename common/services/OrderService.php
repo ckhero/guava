@@ -9,7 +9,9 @@
 namespace common\services;
 
 
+use common\components\Log;
 use common\consts\ErrorConst;
+use common\consts\LogTypeConst;
 use common\consts\SystemConst;
 use common\exceptions\DefaultException;
 use common\models\Order;
@@ -41,7 +43,7 @@ class OrderService
             'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
             'openid' => $user->user_openid,
         ]);
-
+        Log::info("支付结果", $result, LogTypeConst::TYPE_ORDER);
         return [
             'timeStamp' => time(),
             'nonceStr' => $result['nonce_str'],
