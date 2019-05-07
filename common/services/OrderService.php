@@ -31,10 +31,10 @@ class OrderService
     public function book(User $user)
     {
         $order = (new Order())->findByUserId($user->user_id);
-//        if ($order) {
-//            if (!$order->isFinalStatus()) throw new DefaultException(ErrorConst::ERROR_ORDER_PAYING);
-//            if ($order->isSucc()) throw new DefaultException(ErrorConst::ERROR_ORDER_DONE);
-//        }
+        if ($order) {
+            if (!$order->isFinalStatus()) throw new DefaultException(ErrorConst::ERROR_ORDER_PAYING);
+            if ($order->isSucc()) throw new DefaultException(ErrorConst::ERROR_ORDER_DONE);
+        }
         $order = (new Order())->addOne($user->user_id, 1, '课程购买');
         return $this->handleBook($user, $order);
     }
