@@ -39,7 +39,7 @@ class OrderService
         $result = $app->order->unify([
             'body' => $order->order_desc,
             'out_trade_no' => $order->order_no,
-            'total_fee' => $order->order_desc,
+            'total_fee' => $order->order_amount,
             'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
             'openid' => $user->user_openid,
         ]);

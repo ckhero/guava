@@ -11,6 +11,8 @@ namespace api\modules\v1\controllers;
 
 use common\components\ApiController;
 use common\components\Format;
+use common\components\Log;
+use common\consts\LogTypeConst;
 use common\consts\SystemConst;
 use common\models\User;
 use common\services\OrderService;
@@ -21,7 +23,7 @@ class OrderController extends ApiController
 {
     public function actionNotify()
     {
-        $app = Factory::payment(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
+        Log::info('支付结果', $_REQUEST, LogTypeConst::TYPE_ORDER);
     }
 
     public function actionBook()
