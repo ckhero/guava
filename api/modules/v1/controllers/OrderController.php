@@ -12,6 +12,7 @@ namespace api\modules\v1\controllers;
 use common\components\ApiController;
 use common\components\Format;
 use common\consts\SystemConst;
+use common\models\User;
 use common\services\OrderService;
 use EasyWeChat\Factory;
 use Yii;
