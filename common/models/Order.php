@@ -2,8 +2,13 @@
 
 namespace common\models;
 
+use common\consts\ErrorConst;
+use common\consts\OrderConst;
+use common\exceptions\DefaultException;
+use common\helpers\StrHelper;
 use common\queries\OrderQuery;
 use Yii;
+use yii\base\Model;
 
 /**
  * This is the model class for table "order".
@@ -117,5 +122,50 @@ class Order extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['user_id' => 'order_user_id']);
+    }
+
+    /**
+     * @param $userId
+     * @param $amount
+     * @param $desc
+     * @return Order
+     * @throws DefaultException
+     */
+    public function addOne($userId, $amount, $desc)
+    {
+        $model = new self();
+        $model->order_user_id = $userId;
+        $model->order_amount = $amount;
+        $model->order_no = StrHelper::genOrderNo();
+        $model->order_desc = $desc;
+        if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR);
+        return $model;
+    }
+
+    /**
+     * @param $userId
+     * @return array|null|\yii\db\ActiveRecord|self
+     */
+    public function findByUserId($userId)
+    {
+        return self::find()->byUserId($userId)->orderBy('order_id desc')->one();
+    }
+
+    /**
+     * 是否是终态
+     * @return bool
+     */
+    public function isFinalStatus()
+    {
+        return in_array($this->order_status, OrderConst::$finalMap);
+    }
+
+    /**
+     * 是否已完成
+     * @return bool
+     */
+    public function isSucc()
+    {
+        return $this->order_status == OrderConst::STATUS_SUCCESS;
     }
 }

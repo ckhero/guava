@@ -55,6 +55,10 @@ class ErrorConst
     const ERROR_ADMIN_PRIVILGE_SAVE_FAIL = 104015;
     const ERROR_ADMIN_USER_NAME_USED = 104016;
 
+    //支付
+    const ERROR_ORDER_PAYING = 105001;
+    const ERROR_ORDER_DONE = 105002;
+
     public static $msg = [
         self::NO_ERROR => '成功',
         self::ERROR_SYSTEM_ERROR => '系统繁忙，请稍后重试',
@@ -100,6 +104,10 @@ class ErrorConst
         self::ERROR_ADMIN_ROLE_PRIVILGE_SAVE_FAIL => '角色权限更新失败',
         self::ERROR_ADMIN_PRIVILGE_SAVE_FAIL => '权限更新失败',
         self::ERROR_ADMIN_USER_NAME_USED => '用户名已被使用',
+
+
+        self::ERROR_ORDER_PAYING => '有正在处理中的订单',
+        self::ERROR_ORDER_DONE => '支付已完成，请重新进入小程序',
     ];
 
     /**
