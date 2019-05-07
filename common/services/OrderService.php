@@ -45,7 +45,7 @@ class OrderService
         ]);
         Log::info("支付结果", $result, LogTypeConst::TYPE_ORDER);
         return [
-            'timeStamp' => time(),
+            'timeStamp' => (string) time(),
             'nonceStr' => $result['nonce_str'],
             'package' => $result['prepay_id'],
             'paySign' => $result['sign'],
