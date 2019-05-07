@@ -47,7 +47,7 @@ class OrderService
         return [
             'timeStamp' => (string) time(),
             'nonceStr' => $result['nonce_str'],
-            'package' => $result['prepay_id'],
+            'package' => "prepay_id=" . $result['prepay_id'],
             'paySign' => $result['sign'],
             'orderNo' => $order->order_no,
         ];
