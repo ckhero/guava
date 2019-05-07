@@ -98,6 +98,7 @@ class OrderService
                     // 用户是否支付成功
                     if ($message['result_code'] === 'SUCCESS') {
                         $order->setSucc();
+                        $order->user->setPaid();
                         // 用户支付失败
                     } elseif ($message['result_code'] === 'FAIL') {
                         $order->setFail();
