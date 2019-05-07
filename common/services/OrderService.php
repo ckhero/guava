@@ -90,6 +90,9 @@ class OrderService
 
             ///////////// <- 建议在这里调用微信的【订单查询】接口查一下该笔订单的情况，确认是已经支付 /////////////
             if ($message['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
+                Log::info("支付结果同志1", [
+                    'message' => $message,
+                ], LogTypeConst::TYPE_ORDER);
                 $tran = Yii::$app->db->beginTransaction();
                 try {
                     // 用户是否支付成功
@@ -112,6 +115,9 @@ class OrderService
                     return $fail('通信失败，请稍后再通知我');
                 }
             } else {
+                Log::info("支付结果同志2", [
+                    'message' => $message,
+                ], LogTypeConst::TYPE_ORDER);
                 return $fail('通信失败，请稍后再通知我');
             }
 
