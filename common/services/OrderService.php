@@ -45,12 +45,15 @@ class OrderService
         ]);
         Log::info("支付结果", $result, LogTypeConst::TYPE_ORDER);
         $time = (string) time();
+        $str = md5("appId=wxfc3abbaf412150d2&nonceStr{$result['nonce_str']}&package=prepay_id={$result['prepay_id']}signType=MD5&timeStamp={$time}&key=4f1e6dc4b64bfbd9b11cb084a67c4e76");
+
         return [
             'timeStamp' => $time,
             'nonceStr' => $result['nonce_str'],
             'package' => "prepay_id=" . $result['prepay_id'],
-            'paySign' => strtoupper(md5("appId=wxfc3abbaf412150d2&nonceStr{$result['nonce_str']}&package=prepay_id={$result['prepay_id']}signType=MD5&timeStamp={$time}&key=4f1e6dc4b64bfbd9b11cb084a67c4e76")),
-            'orderNo' => $order->order_no,
+            'paySign' => strtoupper($str),
+            'paySign2' => $str,
+                'orderNo' => $order->order_no,
         ];
     }
 
