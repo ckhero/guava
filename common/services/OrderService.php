@@ -49,6 +49,7 @@ class OrderService
             'nonceStr' => $result['nonce_str'],
             'package' => $result['prepay_id'],
             'paySign' => $result['sign'],
+            'orderNo' => $order->order_no,
         ];
     }
 
