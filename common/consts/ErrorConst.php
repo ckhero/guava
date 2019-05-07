@@ -58,6 +58,8 @@ class ErrorConst
     //支付
     const ERROR_ORDER_PAYING = 105001;
     const ERROR_ORDER_DONE = 105002;
+    const ERROR_ORDER_NOT_EXIST = 105003;
+    const ERROR_ORDER_STATUS_UPDATE_FAIL = 105004;
 
     public static $msg = [
         self::NO_ERROR => '成功',
@@ -108,6 +110,8 @@ class ErrorConst
 
         self::ERROR_ORDER_PAYING => '有正在处理中的订单',
         self::ERROR_ORDER_DONE => '支付已完成，请重新进入小程序',
+        self::ERROR_ORDER_NOT_EXIST => '订单不存在',
+        self::ERROR_ORDER_STATUS_UPDATE_FAIL => '订单状态更新失败',
     ];
 
     /**

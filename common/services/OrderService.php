@@ -51,4 +51,17 @@ class OrderService
             'paySign' => $result['sign'],
         ];
     }
+
+    /**
+     * @param $orderNo
+     * @return bool
+     * @throws DefaultException
+     */
+    public function fail($orderNo)
+    {
+        $order = (new Order())->findOrThrow($orderNo);
+        if ($order->isFinalStatus()) return true;
+        $order->setFail();
+        return true;
+    }
 }

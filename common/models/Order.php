@@ -168,4 +168,47 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->order_status == OrderConst::STATUS_SUCCESS;
     }
+
+    /**
+     * 根据订单编号找订单
+     * @param $orderNo
+     * @return array|null|\yii\db\ActiveRecord|self
+     */
+    public function findByOrderNo($orderNo)
+    {
+        return self::find()->where(['order_no' => $orderNo])->one();
+    }
+
+    /**
+     * @param $orderNo
+     * @return array|Order|null|\yii\db\ActiveRecord|self
+     * @throws DefaultException
+     */
+    public function findOrThrow($orderNo)
+    {
+        $order = $this->findByOrderNo($orderNo);
+        if (!$orderNo) throw new DefaultException(ErrorConst::ERROR_ORDER_NOT_EXIST);
+        return $order;
+    }
+
+    /**
+     * @param $status
+     * @return $this
+     */
+    public function updateStatus($status)
+    {
+        if ($status == $this->order_status) return $this;
+        $this->order_status = $status;
+        if (!$this->save()) throw new DefaultException(ErrorConst::ERROR_ORDER_STATUS_UPDATE_FAIL);
+        return $this;
+    }
+
+    /**
+     * @return Order
+     * @throws DefaultException
+     */
+    public function setFail()
+    {
+        return $this->updateStatus(OrderConst::STATUS_FAIL);
+    }
 }

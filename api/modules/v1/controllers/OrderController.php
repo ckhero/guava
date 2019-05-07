@@ -26,11 +26,28 @@ class OrderController extends ApiController
         Log::info('支付结果', $_REQUEST, LogTypeConst::TYPE_ORDER);
     }
 
+    /**
+     * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \common\exceptions\DefaultException
+     */
     public function actionBook()
     {
         $lessonId = $this->getParam('id');
         $user = (new User())->checkLogin();
         $res = (new OrderService())->book($user);
+        return Format::success($res);
+    }
+
+    /**
+     * @return array
+     * @throws \common\exceptions\DefaultException
+     */
+    public function actionFail()
+    {
+        $orderNo = $this->getParam('order_no');
+        $user = (new User())->checkLogin();
+        $res = (new OrderService())->fail($orderNo);
         return Format::success($res);
     }
 }
