@@ -81,7 +81,7 @@ class OrderService
         $response = $app->handlePaidNotify(function($message, $fail){
             // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
             $order = (new Order())->findByOrderNo($message['out_trade_no']);
-            Log::info("支付结果同志", [
+            Log::info("支付结果通知", [
                 'message' => $message,
             ], LogTypeConst::TYPE_ORDER);
             if (!$order) { // 如果订单不存在 或者 订单已经支付过了
@@ -96,10 +96,10 @@ class OrderService
                 $tran = Yii::$app->db->beginTransaction();
                 try {
                     // 用户是否支付成功
-                    if (array_get($message, 'result_code') === 'SUCCESS') {
+                    if ($message['result_code'] === 'SUCCESS') {
                         $order->setSucc();
                         // 用户支付失败
-                    } elseif (array_get($message, 'result_code') === 'FAIL') {
+                    } elseif ($message['result_code'] === 'FAIL') {
                         $order->setFail();
                     }
                     $tran->commit();
