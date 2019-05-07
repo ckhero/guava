@@ -23,7 +23,7 @@ class OrderController extends ApiController
 {
     public function actionNotify()
     {
-        Log::info('支付结果', $_REQUEST, LogTypeConst::TYPE_ORDER);
+        return (new OrderService())->notify();
     }
 
     /**

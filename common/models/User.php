@@ -8,6 +8,7 @@ use common\consts\ErrorConst;
 use common\consts\LogTypeConst;
 use common\consts\RedisConst;
 use common\consts\SystemConst;
+use common\consts\UserConst;
 use common\exceptions\DefaultException;
 use common\queries\UserQuery;
 use common\services\LevelService;
@@ -251,5 +252,14 @@ class User extends \yii\db\ActiveRecord
 
         $list = $query->all();
         return [$total, $list];
+    }
+
+    /**
+     * 设置用户已支付
+     */
+    public function setPaid()
+    {
+        $this->user_pay_status = UserConst::PAY_STATUS_YES;
+        $this->save();
     }
 }

@@ -117,7 +117,7 @@ class Order extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|User
      */
     public function getUser()
     {
@@ -210,5 +210,14 @@ class Order extends \yii\db\ActiveRecord
     public function setFail()
     {
         return $this->updateStatus(OrderConst::STATUS_FAIL);
+    }
+
+    /**
+     * @return Order
+     * @throws DefaultException
+     */
+    public function setSucc()
+    {
+        return $this->updateStatus(OrderConst::STATUS_SUCCESS);
     }
 }
