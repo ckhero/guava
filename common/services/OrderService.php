@@ -44,11 +44,12 @@ class OrderService
             'openid' => $user->user_openid,
         ]);
         Log::info("支付结果", $result, LogTypeConst::TYPE_ORDER);
+        $time = (string) time();
         return [
-            'timeStamp' => (string) time(),
+            'timeStamp' => $time,
             'nonceStr' => $result['nonce_str'],
             'package' => "prepay_id=" . $result['prepay_id'],
-            'paySign' => $result['sign'],
+            'paySign' => md5("appId=wxfc3abbaf412150d2&nonceStr{$result['nonce_str']}&package=prepay_id={$result['prepay_id']}signType=MD5&timeStamp={$time}&key=4f1e6dc4b64bfbd9b11cb084a67c4e76"),
             'orderNo' => $order->order_no,
         ];
     }
