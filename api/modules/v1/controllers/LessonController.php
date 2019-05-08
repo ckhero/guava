@@ -67,4 +67,13 @@ class LessonController extends ApiController
 
         return Format::success($res);
     }
+
+    public function actionReview()
+    {
+        $lessonId = $this->getParam('id');
+        $user = (new User())->checkLogin();
+
+        $res = (new LessonService())->detail($user, $lessonId, true);
+        return Format::success($res);
+    }
 }

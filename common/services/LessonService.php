@@ -39,7 +39,7 @@ class LessonService
      * @return array
      * @throws DefaultException
      */
-    public function detail(User $user, int $lessonId): array
+    public function detail(User $user, int $lessonId, bool $isReview = false): array
     {
         $lesson = (new Lesson())->findByLessonId($lessonId);
 
@@ -49,7 +49,7 @@ class LessonService
 
         if (!(new UserLessonService($user))->isUnlock($lessonId)) throw new DefaultException(ErrorConst::ERROR_LESSON_LOCK);
 
-        if ((new UserLessonService($user))->isFinish($lessonId)) throw new DefaultException(ErrorConst::ERROR_LESSON_ALREADY_DONE);
+        if ((new UserLessonService($user))->isFinish($lessonId) && !$isReview) throw new DefaultException(ErrorConst::ERROR_LESSON_ALREADY_DONE);
 
         $lessonDatum = [
             'datum_type' => $lesson->lessonDatum ->datum->datum_detail_type ?? '',
