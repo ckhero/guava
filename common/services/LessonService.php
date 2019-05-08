@@ -64,6 +64,7 @@ class LessonService
                 $options[$item->lesson_question_item_option] = [
                     'lesson_question_item_option' => $item->lesson_question_item_option,
                     'lesson_question_item_detail' => $item->lesson_question_item_detail,
+                    'lesson_question_item_right' => $item->lesson_question_item_right,
                     'check' => false
                 ];
             }
@@ -74,6 +75,7 @@ class LessonService
                 'lesson_question_type' => $lessonQuestion->lesson_question_type,
                 'lesson_question_detail' => $lessonQuestion->lesson_question_detail,
                 'lesson_question_explanation' => $lessonQuestion->lesson_question_explanation,
+                'user_option' => (new UserLessonService())->getUserOption($user->user_id, $lessonId, $lessonId, $lessonQuestion->lesson_question_id),
                 'options' => $options,
             ];
         }

@@ -149,4 +149,20 @@ class UserLessonService
 
         return round($done / $total , 2);
     }
+
+    /**
+     * @param UserLesson $userLesson
+     * @param int $questionId
+     * @return null
+     */
+    public function getUserOption(int $userId, int $lessonId, int $questionId)
+    {
+        $userLesson = (new UserLesson())->findByLessonId($userId, $lessonId);
+        if (!$userLesson) return null;
+        $options = json_decode($userLesson->user_lesson_options, true);
+        foreach ($options as $option) {
+            if ($option['lesson_question_id'] == $questionId) return $option['option'];
+        }
+        return null;
+    }
 }
