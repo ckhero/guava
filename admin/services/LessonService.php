@@ -46,6 +46,7 @@ class LessonService extends BaseService
                     'lesson_question_items' => $lessonQuestionItems,
                     'lesson_question_id' => $lessonQuestion->lesson_question_id,
                     'lesson_question_detail' => $lessonQuestion->lesson_question_detail,
+                    'lesson_question_explanation' => $lessonQuestion->lesson_question_explanation,
                     'lesson_question_type' => $lessonQuestion->lesson_question_type,
                     'lesson_question_sort' => $lessonQuestion->lesson_question_sort,
                     'lesson_question_right_option' => $lessonQuestion->lessonQuestionRightItem->lesson_question_item_option ?? '',

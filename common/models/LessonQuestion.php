@@ -15,6 +15,7 @@ use Yii;
  * @property int $lesson_question_sort 题目排序
  * @property string $lesson_question_detail 题目内容
  * @property string $lesson_question_type 题目内容类型[text:文字;img:图片;]
+ * @property string $lesson_question_explanation 题目内容类型[text:文字;img:图片;]
  * @property string $lesson_question_create_at 题目创建时间
  * @property string $lesson_question_update_at 题目更新时间
  *
@@ -41,7 +42,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
         return [
             [['lesson_question_lesson_id'], 'required'],
             [['lesson_question_lesson_id', 'lesson_question_sort'], 'integer'],
-            [['lesson_question_detail', 'lesson_question_type'], 'string'],
+            [['lesson_question_detail', 'lesson_question_type', 'lesson_question_explanation'], 'string'],
             [['lesson_question_create_at', 'lesson_question_update_at'], 'safe'],
         ];
     }
@@ -56,6 +57,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
             'lesson_question_lesson_id' => 'LessonController Question LessonController ID',
             'lesson_question_sort' => 'LessonController Question Sort',
             'lesson_question_detail' => 'LessonController Question Detail',
+            'lesson_question_explanation' => 'LessonController Question Detail',
             'lesson_question_type' => 'LessonController Question Type',
             'lesson_question_create_at' => 'LessonController Question Create At',
             'lesson_question_update_at' => 'LessonController Question Update At',
@@ -123,17 +125,19 @@ class LessonQuestion extends \yii\db\ActiveRecord
      * @param $lessonQuestionLessonId
      * @param $lessonQuestionSort
      * @param $lessonQuestionDetail
+     * @param $lessonQuestionExplanation
      * @param $lessonQuestionType
      * @return LessonQuestion|null
      * @throws DefaultException
      */
-    public function createOrUpdate($lessonQuestionId, $lessonQuestionLessonId, $lessonQuestionSort, $lessonQuestionDetail, $lessonQuestionType)
+    public function createOrUpdate($lessonQuestionId, $lessonQuestionLessonId, $lessonQuestionSort, $lessonQuestionDetail, $lessonQuestionExplanation, $lessonQuestionType)
     {
         $model = self::findOne($lessonQuestionId);
         if (!$model) $model = new self();
         $model->lesson_question_lesson_id = $lessonQuestionLessonId;
         $model->lesson_question_sort = $lessonQuestionSort;
         $model->lesson_question_detail = $lessonQuestionDetail;
+        $model->lesson_question_explanation = $lessonQuestionExplanation;
         $model->lesson_question_type = $lessonQuestionType;
         if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, json_encode($model->getFirstErrors(), JSON_UNESCAPED_UNICODE));
         return $model;
