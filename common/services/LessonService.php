@@ -75,7 +75,7 @@ class LessonService
                 'lesson_question_type' => $lessonQuestion->lesson_question_type,
                 'lesson_question_detail' => $lessonQuestion->lesson_question_detail,
                 'lesson_question_explanation' => $lessonQuestion->lesson_question_explanation,
-                'user_option' => (new UserLessonService($user))->getUserOption($lessonId, $lessonId, $lessonQuestion->lesson_question_id),
+                'user_option' => (new UserLessonService($user))->getUserOption($lessonId, $lessonQuestion->lesson_question_id),
                 'options' => $options,
             ];
         }
