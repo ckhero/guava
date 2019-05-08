@@ -151,6 +151,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
                 $lessonId,
                 ($question['lesson_question_sort'] ?? 1),
                 ($question['lesson_question_detail'] ?? ''),
+                ($question['lesson_question_explanation'] ?? ''),
                 ($question['lesson_question_type'] ?? 'text')
             );
             $lessonQuestionItem = (new LessonQuestionItem())->mutliCreateOrUpdate($question['lesson_question_items'], $questionModel->lesson_question_id, $question['lesson_question_right_option']);
