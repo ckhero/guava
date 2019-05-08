@@ -73,6 +73,7 @@ class LessonService
                 'lesson_question_sort' => $lessonQuestion->lesson_question_sort,
                 'lesson_question_type' => $lessonQuestion->lesson_question_type,
                 'lesson_question_detail' => $lessonQuestion->lesson_question_detail,
+                'lesson_question_explanation' => $lessonQuestion->lesson_question_explanation,
                 'options' => $options,
             ];
         }
