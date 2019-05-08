@@ -155,9 +155,9 @@ class UserLessonService
      * @param int $questionId
      * @return null
      */
-    public function getUserOption(int $userId, int $lessonId, int $questionId)
+    public function getUserOption(int $lessonId, int $questionId)
     {
-        $userLesson = (new UserLesson())->findByLessonId($userId, $lessonId);
+        $userLesson = (new UserLesson())->findByLessonId($this->user->user_id, $lessonId);
         if (!$userLesson) return null;
         $options = json_decode($userLesson->user_lesson_options, true);
         foreach ($options as $option) {
