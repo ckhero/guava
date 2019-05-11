@@ -102,7 +102,7 @@ class UserService
             //$baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
             $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
 
-            Log::info('decryptData-result', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
+            Log::info('decryptData-result', [$sessionKey, $baseInfo,$baseInfo['purePhoneNumber'] ], LogTypeConst::TYPE_ORDER);
             //$baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
             $user->setPhone($baseInfo['purePhoneNumber']);
@@ -144,6 +144,6 @@ class UserService
 
         $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
 
-        return json_decode($result, true);
+        return $result;
     }
 }
