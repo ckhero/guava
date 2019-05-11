@@ -134,7 +134,7 @@ class UserService
 
     public function decryptData($sessionKey ,$encryptedData, $iv )
     {
-        Log::info('$sessionInfo', [$sessionKey, $encryptedData, $iv ], LogTypeConst::TYPE_ORDER);
+        Log::info('decryptData', [$sessionKey, $encryptedData, $iv ], LogTypeConst::TYPE_ORDER);
 
         $aesKey=base64_decode($sessionKey);
 
