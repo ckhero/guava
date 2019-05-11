@@ -19,6 +19,7 @@ use common\exceptions\DefaultException;
 use common\models\User;
 use common\models\UserToken;
 use EasyWeChat\Factory;
+use EasyWeChat\Kernel\Support\AES;
 use Yii;
 
 class UserService
