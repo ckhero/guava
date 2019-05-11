@@ -88,11 +88,12 @@ class UserService
 
             $user->setPhone($baseInfo['setPhone']);
         } catch (\Exception $e) {
-            Log::error(ErrorConst::msg(ErrorConst::ERROR_LOGIN_FAIL), [
+            Log::error(ErrorConst::msg(ErrorConst::ERROR_SET_PHONE_FAIL), [
                 func_get_args(),
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+                $baseInfo
             ], LogTypeConst::TYPE_LOGIN);
-            throw new DefaultException(ErrorConst::ERROR_LOGIN_FAIL);
+            throw new DefaultException(ErrorConst::ERROR_SET_PHONE_FAIL);
         }
 
         return true;

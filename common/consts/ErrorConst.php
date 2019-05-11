@@ -28,6 +28,7 @@ class ErrorConst
     const ERROR_POINT_LOG_SAVE_FAIL = 101008;
     const ERROR_LOGIN_FAIL = 101009;
     const ERROR_NO_PHONE = 101010;
+    const ERROR_SET_PHONE_FAIL = 101011;
 
     //课程相关
     const ERROR_LESSON_NOT_EXISTS = 102001;
@@ -78,6 +79,7 @@ class ErrorConst
         self::ERROR_USER_DO_SIGN_FAIL => '用户签到失败',
         self::ERROR_LOGIN_FAIL => '用户登录失败',
         self::ERROR_NO_PHONE => '手机号码不存在',
+        self::ERROR_SET_PHONE_FAIL => '手机号码设置失败',
 
         //积分相关
         self::ERROR_POINT_LOG_SAVE_FAIL => '积分日志添加失败',
