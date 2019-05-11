@@ -37,7 +37,7 @@ class UserService
             $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
             $sessionInfo = $app->auth->session($code);
             $baseInfo = $app->encryptor->decryptData($sessionInfo['session_key'], $iv, $encryptData);
-
+            Log::info('$sessionInfo', $sessionInfo, LogTypeConst::TYPE_ORDER);
             $user = (new User())->findOrCreate($sessionInfo['openid'], $baseInfo['nickName'], '', $baseInfo['avatarUrl']);
             $this->setSessionKey($sessionInfo['session_key']);
             $userToken = (new UserToken())->createOrderUpdate($user->user_id);
@@ -92,6 +92,7 @@ class UserService
             } else {
                 $sessionKey = $this->getSessionKey($user->user_id);
             }
+            Log::info('$sessionInfo', $sessionKey, LogTypeConst::TYPE_ORDER);
             $baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
             $user->setPhone($baseInfo['setPhone']);
