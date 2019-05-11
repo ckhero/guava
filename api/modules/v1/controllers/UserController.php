@@ -47,4 +47,20 @@ class UserController extends ApiController
 
         return Format::success($res);
     }
+
+    /**
+     * @return array
+     * @throws \common\exceptions\DefaultException
+     */
+    public function actionSetPhone()
+    {
+        $user = (new User())->checkLogin();
+        $code = $this->getParam('code');
+        $iv = $this->getParam('iv');
+        $encryptData = $this->getParam('encrypt_data');
+
+        $res = (new UserService())->setPhone($user, $code, $iv, $encryptData);
+
+        return Format::success($res);
+    }
 }

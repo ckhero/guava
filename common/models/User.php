@@ -130,7 +130,10 @@ class User extends \yii\db\ActiveRecord
     public function checkLogin()
     {
         $token = \Yii::$app->request->headers->get(SystemConst::TOKEN, '');
-        if ($user = (new UserToken())->findByToken($token)->user ?? '') return $user;
+        if ($user = (new UserToken())->findByToken($token)->user ?? '') {
+            if (!$user->hasPhone()) throw new DefaultException(ErrorConst::ERROR_NO_PHONE);
+            return $user;
+        }
 
         Log::warning(ErrorConst::msg(ErrorConst::ERROR_USER_NOT_LOGIN), [
             'token' => $token,
@@ -261,5 +264,25 @@ class User extends \yii\db\ActiveRecord
     {
         $this->user_pay_status = UserConst::PAY_STATUS_YES;
         $this->save();
+    }
+
+    /**
+     * 判断是否有手机号码
+     * @return bool
+     */
+    public function hasPhone()
+    {
+        return (bool) $this->user_phone;
+    }
+
+    /**
+     * 设置手机号码
+     * @param $phone
+     * @return bool
+     */
+    public function setPhone($phone)
+    {
+        $this->user_phone = $phone;
+        return $this->save();
     }
 }

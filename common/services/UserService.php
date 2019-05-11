@@ -70,4 +70,31 @@ class UserService
             'sign_day' => $user->user_sign_num
         ];
     }
+
+    /**
+     * @param User $user
+     * @param string $code
+     * @param string $iv
+     * @param string $encryptData
+     * @return bool
+     * @throws DefaultException
+     */
+    public function setPhone(User $user, string $code, string $iv, string $encryptData)
+    {
+        try {
+            $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
+            $sessionInfo = $app->auth->session($code);
+            $baseInfo = $app->encryptor->decryptData($sessionInfo['session_key'], $iv, $encryptData);
+
+            $user->setPhone($baseInfo['setPhone']);
+        } catch (\Exception $e) {
+            Log::error(ErrorConst::msg(ErrorConst::ERROR_LOGIN_FAIL), [
+                func_get_args(),
+                'message' => $e->getMessage()
+            ], LogTypeConst::TYPE_LOGIN);
+            throw new DefaultException(ErrorConst::ERROR_LOGIN_FAIL);
+        }
+
+        return true;
+    }
 }

@@ -27,6 +27,7 @@ class ErrorConst
     const ERROR_USER_DO_SIGN_FAIL = 101007;
     const ERROR_POINT_LOG_SAVE_FAIL = 101008;
     const ERROR_LOGIN_FAIL = 101009;
+    const ERROR_NO_PHONE = 101010;
 
     //课程相关
     const ERROR_LESSON_NOT_EXISTS = 102001;
@@ -76,6 +77,7 @@ class ErrorConst
         self::ERROR_USER_POINT_UPDATE_FAIL => '用户积分更新失败',
         self::ERROR_USER_DO_SIGN_FAIL => '用户签到失败',
         self::ERROR_LOGIN_FAIL => '用户登录失败',
+        self::ERROR_NO_PHONE => '手机号码不存在',
 
         //积分相关
         self::ERROR_POINT_LOG_SAVE_FAIL => '积分日志添加失败',
