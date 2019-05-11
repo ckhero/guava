@@ -68,7 +68,7 @@ class UserController extends ApiController
     {
         $user = (new User())->checkLogin(false);
         $code = $this->getParam('code');
-        $res = (new UserService())->setPhone($user, $code);
+        $res = (new UserService())->setSessionKey($user, $code);
 
         return Format::success($res);
     }
