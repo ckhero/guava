@@ -38,6 +38,7 @@ class UserService
             $baseInfo = $app->encryptor->decryptData($sessionInfo['session_key'], $iv, $encryptData);
 
             $user = (new User())->findOrCreate($sessionInfo['openid'], $baseInfo['nickName'], '', $baseInfo['avatarUrl']);
+            $this->setSessionKey($sessionInfo['session_key']);
             $userToken = (new UserToken())->createOrderUpdate($user->user_id);
 
             Yii::$app->trigger(EventConst::EVENT_LOGIN, (new LoginEvent($user)));
@@ -82,9 +83,16 @@ class UserService
     public function setPhone(User $user, string $code, string $iv, string $encryptData)
     {
         try {
-            $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
-            $sessionInfo = $app->auth->session($code);
-            $baseInfo = $app->encryptor->decryptData($sessionInfo['session_key'], $iv, $encryptData);
+            if ($code) {
+                $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
+                $sessionInfo = $app->auth->session($code);
+                $sessionKey = $sessionInfo['session_key'];
+                $this->setSessionKey($sessionKey);
+            } else {
+                $sessionKey = $this->getSessionKey($user->user_id);
+            }
+
+            $baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
             $user->setPhone($baseInfo['setPhone']);
         } catch (\Exception $e) {
@@ -96,5 +104,15 @@ class UserService
         }
 
         return true;
+    }
+
+    public function getSessionKey($userId)
+    {
+        return Yii::$app->cache->get($userId);
+    }
+
+    public function setSessionKey($userId, $sessionKey)
+    {
+        return Yii::$app->cache->set($userId, $sessionKey);
     }
 }
