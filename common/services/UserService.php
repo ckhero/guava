@@ -39,7 +39,7 @@ class UserService
             $baseInfo = $app->encryptor->decryptData($sessionInfo['session_key'], $iv, $encryptData);
             Log::info('$sessionInfo', $sessionInfo, LogTypeConst::TYPE_ORDER);
             $user = (new User())->findOrCreate($sessionInfo['openid'], $baseInfo['nickName'], '', $baseInfo['avatarUrl']);
-            $this->setSessionKey($sessionInfo['session_key']);
+            $this->setSessionKey($user->user_id, $sessionInfo['session_key']);
             $userToken = (new UserToken())->createOrderUpdate($user->user_id);
 
             Yii::$app->trigger(EventConst::EVENT_LOGIN, (new LoginEvent($user)));
