@@ -93,10 +93,10 @@ class UserService
 //                $sessionKey = $this->getSessionKey($user->user_id);
 //            }
             $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
-            $sessionInfo = $app->auth->session($code);
-            $sessionKey = $sessionInfo['session_key'];
-            $this->setSessionKey($user->user_id, $sessionKey);
-
+//            $sessionInfo = $app->auth->session($code);
+//            $sessionKey = $sessionInfo['session_key'];
+//            $this->setSessionKey($user->user_id, $sessionKey);
+            $sessionKey = $this->getSessionKey($user->user_id);
             //$baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
             $baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
@@ -120,22 +120,13 @@ class UserService
         return Yii::$app->cache->get($userId);
     }
 
-    public function setSessionKey($userId, $sessionKey)
+
+    public function setSessionKey($user, $code)
     {
-        return Yii::$app->cache->set($userId, $sessionKey);
-    }
-
-    public function decryptData( $sessionKey, $encryptedData, $iv )
-    {
-
-        $aesKey=base64_decode($sessionKey);
-
-        $aesIV=base64_decode($iv);
-
-        $aesCipher=base64_decode($encryptedData);
-
-        $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
-
-        return $result;
+        $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
+        $sessionInfo = $app->auth->session($code);
+        $sessionKey = $sessionInfo['session_key'];
+        Yii::$app->cache->set($user->user_id, $sessionKey);
+        return $sessionKey;
     }
 }

@@ -63,4 +63,13 @@ class UserController extends ApiController
 
         return Format::success($res);
     }
+
+    public function actionSetSessionKey()
+    {
+        $user = (new User())->checkLogin(false);
+        $code = $this->getParam('code');
+        $res = (new UserService())->setPhone($user, $code);
+
+        return Format::success($res);
+    }
 }
