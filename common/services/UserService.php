@@ -99,8 +99,8 @@ class UserService
             $sessionKey = $this->getSessionKey($user->user_id);
             Log::info('getSessionKey', [$sessionKey ], LogTypeConst::TYPE_ORDER);
 
-            //$baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
             $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
+            //$baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
 
             Log::info('decryptData-result', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
             //$baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
