@@ -54,7 +54,7 @@ class UserController extends ApiController
      */
     public function actionSetPhone()
     {
-        $user = (new User())->checkLogin();
+        $user = (new User())->checkLogin(false);
         $code = $this->getParam('code');
         $iv = $this->getParam('iv');
         $encryptData = $this->getParam('encrypt_data');

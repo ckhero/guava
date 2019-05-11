@@ -12,6 +12,7 @@ use common\consts\UserConst;
 use common\exceptions\DefaultException;
 use common\queries\UserQuery;
 use common\services\LevelService;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
 use Yii;
 use yii\db\Query;
 
@@ -127,11 +128,11 @@ class User extends \yii\db\ActiveRecord
      * @return User
      * @throws DefaultException
      */
-    public function checkLogin()
+    public function checkLogin($checkPhone = true)
     {
         $token = \Yii::$app->request->headers->get(SystemConst::TOKEN, '');
         if ($user = (new UserToken())->findByToken($token)->user ?? '') {
-            if (!$user->hasPhone()) throw new DefaultException(ErrorConst::ERROR_NO_PHONE);
+            if (!$user->hasPhone() && $checkPhone) throw new DefaultException(ErrorConst::ERROR_NO_PHONE);
             return $user;
         }
 
