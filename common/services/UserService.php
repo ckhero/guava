@@ -99,8 +99,8 @@ class UserService
             $sessionKey = $this->getSessionKey($user->user_id);
             Log::info('getSessionKey', [$sessionKey ], LogTypeConst::TYPE_ORDER);
 
-            $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
             //$baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
+            $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
 
             Log::info('decryptData-result', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
             //$baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
@@ -144,6 +144,6 @@ class UserService
 
         $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
 
-        return $result;
+        return json_decode($result, true);
     }
 }
