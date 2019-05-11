@@ -97,12 +97,12 @@ class UserService
 //            $sessionKey = $sessionInfo['session_key'];
 //            $this->setSessionKey($user->user_id, $sessionKey);
             $sessionKey = $this->getSessionKey($user->user_id);
-            Log::info('$sessionInfo', [$sessionKey ], LogTypeConst::TYPE_ORDER);
+            Log::info('getSessionKey', [$sessionKey ], LogTypeConst::TYPE_ORDER);
 
             //$baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
             $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
 
-            Log::info('$sessionInfo', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
+            Log::info('decryptData-result', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
             //$baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
             $user->setPhone($baseInfo['purePhoneNumber']);
