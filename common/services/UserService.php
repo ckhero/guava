@@ -90,8 +90,12 @@ class UserService
 //                $sessionKey = $sessionInfo['session_key'];
 //                $this->setSessionKey($user->user_id, $sessionKey);
 //            } else {
-                $sessionKey = $this->getSessionKey($user->user_id);
-            //}
+//                $sessionKey = $this->getSessionKey($user->user_id);
+//            }
+            $app = Factory::miniProgram(Yii::$app->params[SystemConst::PARAMS_CONFIG_MINI_PROGRAM]);
+            $sessionInfo = $app->auth->session($code);
+            $sessionKey = $sessionInfo['session_key'];
+            $this->setSessionKey($user->user_id, $sessionKey);
 
             $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
             Log::info('$sessionInfo', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
