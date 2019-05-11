@@ -105,7 +105,7 @@ class UserService
             Log::info('$sessionInfo', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
             //$baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
-            $user->setPhone($baseInfo['setPhone']);
+            $user->setPhone($baseInfo['purePhoneNumber']);
         } catch (\Exception $e) {
             Log::error(ErrorConst::msg(ErrorConst::ERROR_SET_PHONE_FAIL), [
                 func_get_args(),
