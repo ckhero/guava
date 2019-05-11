@@ -91,7 +91,11 @@ class UserService
             } else {
                 $sessionKey = $this->getSessionKey($user->user_id);
             }
-
+            $decrypted = AES::decrypt(
+                base64_decode($encryptData, false), base64_decode($sessionKey, false), base64_decode($iv, false)
+            );
+            return $decrypted;
+            $decrypted = json_decode($this->pkcs7Unpad($decrypted), true);
             $baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
             $user->setPhone($baseInfo['setPhone']);
