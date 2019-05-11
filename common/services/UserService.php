@@ -122,7 +122,7 @@ class UserService
     public function decryptData( $sessionKey, $encryptedData, $iv )
     {
 
-        $aesKey=base64_decode($$sessionKey);
+        $aesKey=base64_decode($sessionKey);
 
         $aesIV=base64_decode($iv);
 
