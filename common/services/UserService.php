@@ -143,6 +143,7 @@ class UserService
         $aesCipher=base64_decode($encryptedData);
 
         $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
+        Log::info('decryptData2', [$result ], LogTypeConst::TYPE_ORDER);
 
         return json_decode($result, true);
     }
