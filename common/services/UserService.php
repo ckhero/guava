@@ -100,7 +100,7 @@ class UserService
             Log::info('$sessionInfo', [$sessionKey ], LogTypeConst::TYPE_ORDER);
 
             //$baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
-            $baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
+            $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
 
             Log::info('$sessionInfo', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
             //$baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
@@ -130,5 +130,20 @@ class UserService
         $sessionKey = $sessionInfo['session_key'];
         Yii::$app->cache->set($user->user_id, $sessionKey);
         return $sessionKey;
+    }
+
+    public function decryptData($sessionKey ,$encryptedData, $iv )
+    {
+        Log::info('$sessionInfo', [$sessionKey, $encryptedData, $iv ], LogTypeConst::TYPE_ORDER);
+
+        $aesKey=base64_decode($sessionKey);
+
+        $aesIV=base64_decode($iv);
+
+        $aesCipher=base64_decode($encryptedData);
+
+        $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
+
+        return $result;
     }
 }
