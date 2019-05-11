@@ -91,7 +91,6 @@ class UserService
             Log::error(ErrorConst::msg(ErrorConst::ERROR_SET_PHONE_FAIL), [
                 func_get_args(),
                 'message' => $e->getMessage(),
-                $baseInfo
             ], LogTypeConst::TYPE_LOGIN);
             throw new DefaultException(ErrorConst::ERROR_SET_PHONE_FAIL);
         }
