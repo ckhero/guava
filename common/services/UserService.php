@@ -144,6 +144,6 @@ class UserService
 
         $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
 
-        return $result;
+        return json_decode($result, true);
     }
 }
