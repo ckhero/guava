@@ -92,8 +92,10 @@ class UserService
 //            } else {
                 $sessionKey = $this->getSessionKey($user->user_id);
             //}
-            Log::info('$sessionInfo', $sessionKey, LogTypeConst::TYPE_ORDER);
-            $baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
+
+            $baseInfo = $this->decryptData($sessionKey, $encryptData, $iv);
+            Log::info('$sessionInfo', [$sessionKey, $baseInfo ], LogTypeConst::TYPE_ORDER);
+            //$baseInfo = $app->encryptor->decryptData($sessionKey, $iv, $encryptData);
 
             $user->setPhone($baseInfo['setPhone']);
         } catch (\Exception $e) {
@@ -115,5 +117,19 @@ class UserService
     public function setSessionKey($userId, $sessionKey)
     {
         return Yii::$app->cache->set($userId, $sessionKey);
+    }
+
+    public function decryptData( $sessionKey, $encryptedData, $iv )
+    {
+
+        $aesKey=base64_decode($$sessionKey);
+
+        $aesIV=base64_decode($iv);
+
+        $aesCipher=base64_decode($encryptedData);
+
+        $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
+
+        return $result;
     }
 }
