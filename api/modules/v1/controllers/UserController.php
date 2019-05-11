@@ -57,7 +57,7 @@ class UserController extends ApiController
         $user = (new User())->checkLogin(false);
         $code = $this->getParam('code');
         $iv = $this->getParam('iv');
-        $encryptData = $this->getParam('encrypt_data');
+        $encryptData = $this->getParam('encryptedData');
 
         $res = (new UserService())->setPhone($user, $code, $iv, $encryptData);
 
