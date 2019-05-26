@@ -16,10 +16,10 @@ return [
         ],
     ],
     'uploads' => [
-        'path' => '../../uploads/',
-        'url' => 'http://guava.51qwer.com/uploads/',
+        'path' => '/data/www/datum/',
+        'url' => 'https://www.passexam.me/',
     ],
     'domain' => [
-        'site' => 'http://guava.51qwer.com',
+        'site' => 'https://www.passexam.me/',
     ],
 ];
