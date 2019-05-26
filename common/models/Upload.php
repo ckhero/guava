@@ -31,12 +31,13 @@ class Upload extends Model
             $files = [];
             foreach ($this->imageFiles as $file) {
                 $fileName =   '/' . \Yii::$app->security->generateRandomString() . '.' . $file->extension;
-                $path = \Yii::$app->params['uploads']['path'] . date('y') . '/' . date('m') . '/' . date('d');
+                $dirPath = date('y') . '/' . date('m') . '/' . date('d');
+                $path = \Yii::$app->params['uploads']['path'] . $dirPath;
                 if (!is_dir($path)) {
                     mkdir($path, 0777, true);
                 }
                 $file->saveAs( $path . $fileName);
-                $files[] = \Yii::$app->params['uploads']['url'] . $fileName;
+                $files[] = \Yii::$app->params['uploads']['url'] . $dirPath. $fileName;
             }
             return $files;
         } else {
