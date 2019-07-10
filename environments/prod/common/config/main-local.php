@@ -6,7 +6,7 @@ return [
             'dsn' => 'mysql:host=172.17.32.13;dbname=guava',
             'username' => 'root',
             'password' => '!EpiELg37wRxgm',
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
