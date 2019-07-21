@@ -16,6 +16,7 @@ use Yii;
  * @property string $lesson_question_detail 题目内容
  * @property string $lesson_question_type 题目内容类型[text:文字;img:图片;]
  * @property string $lesson_question_explanation 题目内容类型[text:文字;img:图片;]
+ * @property string $lesson_question_explanation_type 题目内容类型[text:文字;img:图片;]
  * @property string $lesson_question_create_at 题目创建时间
  * @property string $lesson_question_update_at 题目更新时间
  *
@@ -42,7 +43,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
         return [
             [['lesson_question_lesson_id'], 'required'],
             [['lesson_question_lesson_id', 'lesson_question_sort'], 'integer'],
-            [['lesson_question_detail', 'lesson_question_type', 'lesson_question_explanation'], 'string'],
+            [['lesson_question_detail', 'lesson_question_type', 'lesson_question_explanation','lesson_question_explanation_type'], 'string'],
             [['lesson_question_create_at', 'lesson_question_update_at'], 'safe'],
         ];
     }
@@ -58,6 +59,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
             'lesson_question_sort' => 'LessonController Question Sort',
             'lesson_question_detail' => 'LessonController Question Detail',
             'lesson_question_explanation' => 'LessonController Question Detail',
+            'lesson_question_explanation_type' => 'LessonController Question Detail',
             'lesson_question_type' => 'LessonController Question Type',
             'lesson_question_create_at' => 'LessonController Question Create At',
             'lesson_question_update_at' => 'LessonController Question Update At',
@@ -130,7 +132,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
      * @return LessonQuestion|null
      * @throws DefaultException
      */
-    public function createOrUpdate($lessonQuestionId, $lessonQuestionLessonId, $lessonQuestionSort, $lessonQuestionDetail, $lessonQuestionExplanation, $lessonQuestionType)
+    public function createOrUpdate($lessonQuestionId, $lessonQuestionLessonId, $lessonQuestionSort, $lessonQuestionDetail, $lessonQuestionExplanation, $lessonQuestionExplanationType, $lessonQuestionType)
     {
         $model = self::findOne($lessonQuestionId);
         if (!$model) $model = new self();
@@ -138,6 +140,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
         $model->lesson_question_sort = $lessonQuestionSort;
         $model->lesson_question_detail = $lessonQuestionDetail;
         $model->lesson_question_explanation = $lessonQuestionExplanation;
+        $model->lesson_question_explanation_type = $lessonQuestionExplanationType;
         $model->lesson_question_type = $lessonQuestionType;
         if (!$model->save()) throw new DefaultException(ErrorConst::ERROR_SYSTEM_ERROR, json_encode($model->getFirstErrors(), JSON_UNESCAPED_UNICODE));
         return $model;
@@ -152,6 +155,7 @@ class LessonQuestion extends \yii\db\ActiveRecord
                 ($question['lesson_question_sort'] ?? 1),
                 ($question['lesson_question_detail'] ?? ''),
                 ($question['lesson_question_explanation'] ?? ''),
+                ($question['lesson_question_explanation_type'] ?? 'text'),
                 ($question['lesson_question_type'] ?? 'text')
             );
             $lessonQuestionItem = (new LessonQuestionItem())->mutliCreateOrUpdate($question['lesson_question_items'], $questionModel->lesson_question_id, $question['lesson_question_right_option']);

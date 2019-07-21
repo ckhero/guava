@@ -23,7 +23,7 @@ class CorFilter extends Cors
         $result = parent::beforeAction($action);
         //跨域请求，直接返回
         if (Yii::$app->request->method == 'OPTIONS') {
-            return false;
+            return true;
         }
         return $result;
     }
