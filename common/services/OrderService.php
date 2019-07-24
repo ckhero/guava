@@ -35,7 +35,7 @@ class OrderService
             if (!$order->isFinalStatus()) throw new DefaultException(ErrorConst::ERROR_ORDER_PAYING);
             if ($order->isSucc()) throw new DefaultException(ErrorConst::ERROR_ORDER_DONE);
         }
-        $order = (new Order())->addOne($user->user_id, 0.01, '课程购买');
+        $order = (new Order())->addOne($user->user_id, 1, '课程购买');
         return $this->handleBook($user, $order);
     }
 
@@ -58,11 +58,12 @@ class OrderService
         $result = $app->order->unify([
             'body' => $order->order_desc,
             'out_trade_no' => $order->order_no,
-            'total_fee' => $order->order_amount,
+            'total_fee' => $order->orderAmount,
             'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
             'openid' => $user->user_openid,
         ]);
         Log::info("支付申请结果", $result, LogTypeConst::TYPE_ORDER);
+        Log::info("支付申请结果", $order->orderAmount, LogTypeConst::TYPE_ORDER);
         $time = (string) time();
         $str = "appId=wxfc3abbaf412150d2&nonceStr={$result['nonce_str']}&package=prepay_id={$result['prepay_id']}&signType=MD5&timeStamp={$time}&key=b0baee9d279d34fa1dfd71aadb908c3f";
 
