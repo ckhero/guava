@@ -35,7 +35,7 @@ class OrderService
             if (!$order->isFinalStatus()) throw new DefaultException(ErrorConst::ERROR_ORDER_PAYING);
             if ($order->isSucc()) throw new DefaultException(ErrorConst::ERROR_ORDER_DONE);
         }
-        $order = (new Order())->addOne($user->user_id, 100, '课程购买');
+        $order = (new Order())->addOne($user->user_id, 1, '课程购买');
         return $this->handleBook($user, $order);
     }
 
@@ -58,7 +58,7 @@ class OrderService
         $result = $app->order->unify([
             'body' => $order->order_desc,
             'out_trade_no' => $order->order_no,
-            'total_fee' => $order->orderAmount,
+            'total_fee' => $order->order_amount,
             'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
             'openid' => $user->user_openid,
         ]);
