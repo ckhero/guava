@@ -44,7 +44,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['order_user_id'], 'required'],
             [['order_user_id'], 'integer'],
-            [['order_amount'], 'decimals'],
+            [['order_amount'], 'double'],
             [['order_status'], 'string'],
             [['order_create_at', 'order_update_at'], 'safe'],
             [['order_no', 'order_out_trade_no'], 'string', 'max' => 128],
