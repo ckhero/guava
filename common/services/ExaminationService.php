@@ -41,6 +41,7 @@ class ExaminationService
                 unset($options[$k]);
             }
         }
+        ksort($options);
         Log::info("考试结果-2", [
             'options' => $options,
         ]);
