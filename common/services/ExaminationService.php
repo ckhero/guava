@@ -30,18 +30,27 @@ class ExaminationService
      */
     public function save(User $user, int $lessonId, array $options)
     {
-         Log::info("考试结果", [
+
+         Log::info("考试结果-1", [
              'user_id' => $user->user_id,
              'lesson_id' => $lessonId,
              'options' => $options,
          ]);
+        foreach ($options as $k => $item) {
+            if (is_null($item)) {
+                unset($k);
+            }
+        }
+        Log::info("考试结果-2", [
+            'options' => $options,
+        ]);
         $lesson = (new Lesson())->findByLessonId($lessonId);
         (new LessonService())->checkPaid($user, $lesson);
 
         $userLesson = (new UserLesson())->getOne($user->user_id, $lessonId);
         $optionsKeys = array_column($options, 'lesson_question_id');
 
-        Log::info("考试结果key", [
+        Log::info("考试结果-3", [
             'key' => $optionsKeys,
             'questions' => $lesson->lessonQuestions,
         ]);
@@ -51,7 +60,7 @@ class ExaminationService
 
             foreach ($lesson->lessonQuestions as $question) {
                 $index = array_search($question->lesson_question_id, $optionsKeys);
-                $option = $optionsKeys[$index];
+                $option = $options[$index];
                 $optionsNew[] = $option;
                 if ($index !== false) {
                     if ($question->checkOption($option['option'])) {
