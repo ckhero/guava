@@ -15,6 +15,7 @@ use common\consts\LogTypeConst;
 use common\consts\SystemConst;
 use common\exceptions\DefaultException;
 use common\models\Order;
+use common\models\PayLog;
 use common\models\User;
 use EasyWeChat\Factory;
 use Yii;
@@ -83,6 +84,7 @@ class OrderService
         $response = $app->handlePaidNotify(function($message, $fail){
             // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
             $order = (new Order())->findByOrderNo($message['out_trade_no']);
+            PayLog::addOne($order->order_user_id, $order->order_id, json_encode($message, JSON_UNESCAPED_UNICODE));
             Log::info("支付结果通知", [
                 'message' => $message,
             ], LogTypeConst::TYPE_ORDER);
