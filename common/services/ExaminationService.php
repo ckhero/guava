@@ -39,7 +39,7 @@ class ExaminationService
         (new LessonService())->checkPaid($user, $lesson);
 
         $userLesson = (new UserLesson())->getOne($user->user_id, $lessonId);
-        $optionsKeys = array_keys($options);
+        $optionsKeys = array_column($options, 'lesson_question_id');
 
         Log::info("考试结果key", [
             'key' => $optionsKeys,
