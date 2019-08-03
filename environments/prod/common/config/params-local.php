@@ -23,7 +23,7 @@ return [
         'site' => 'https://www.goodexam.com.cn/',
     ],
     'pay' => [
-        'leesonSort' => 3,
+        'lessonSort' => 3,
         'price' => 1,
     ],
 ];
