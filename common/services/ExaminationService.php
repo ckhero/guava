@@ -38,7 +38,7 @@ class ExaminationService
          ]);
         foreach ($options as $k => $item) {
             if (is_null($item)) {
-                unset($k);
+                unset($options[$k]);
             }
         }
         Log::info("考试结果-2", [
