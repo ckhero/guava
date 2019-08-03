@@ -61,6 +61,7 @@ class OrderService
             'total_fee' => $order->order_amount,
             'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
             'openid' => $user->user_openid,
+            'notify_url' => 'https://www.goodexam.com.cn/v1/order/notify'
         ]);
         Log::info("支付申请结果", $result, LogTypeConst::TYPE_ORDER);
         Log::info("支付申请结果", $order->orderAmount, LogTypeConst::TYPE_ORDER);
