@@ -20,4 +20,8 @@ return [
     'domain' => [
         'site' => 'http://guava-admin.com',
     ],
+    'pay' => [
+        'leesonSort' => 3,
+        'price' => 1,
+    ],
 ];

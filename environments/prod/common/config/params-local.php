@@ -22,4 +22,8 @@ return [
     'domain' => [
         'site' => 'https://www.goodexam.com.cn/',
     ],
+    'pay' => [
+        'leesonSort' => 3,
+        'price' => 1,
+    ],
 ];
