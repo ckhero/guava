@@ -136,7 +136,7 @@ class Lesson extends \yii\db\ActiveRecord
      */
     public function isNeedPay()
     {
-        return $this->lesson_sort > 3;
+        return $this->lesson_sort > 5;
     }
 
     /**

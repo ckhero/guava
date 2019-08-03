@@ -35,7 +35,7 @@ class OrderService
             if (!$order->isFinalStatus()) throw new DefaultException(ErrorConst::ERROR_ORDER_PAYING);
             if ($order->isSucc()) throw new DefaultException(ErrorConst::ERROR_ORDER_DONE);
         }
-        $order = (new Order())->addOne($user->user_id, 1, '课程购买');
+        $order = (new Order())->addOne($user->user_id, 6000, '课程购买');
         return $this->handleBook($user, $order);
     }
 
